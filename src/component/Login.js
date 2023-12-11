@@ -1,12 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import useAuth from './hooks/useAuth';
 import axios from "../api/axios"
-import {useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 const LOGIN_URL = "/login"
 
 function Login() {
-    const { auth, setAuth, setIsLogin} = useAuth();
+    const emailRef = useRef();
+    const { auth, setAuth, setIsLogin } = useAuth();
 
     const navigate = useNavigate();
     const location = useLocation();
@@ -20,6 +21,10 @@ function Login() {
     const [response, setResponse] = useState('');
 
     const from = location.state?.from?.pathname || "/";
+
+    useEffect(() => {
+        emailRef.current.focus();
+    }, [])
 
 
     // Handle form input changes
@@ -71,7 +76,7 @@ function Login() {
                 alert("Email id is not registred !!!");
             }
             else {
-                 setErrMsg('Login failed');
+                setErrMsg('Login failed');
                 alert("Incorrect Email or Password!");
             }
 
@@ -100,6 +105,7 @@ function Login() {
                                         className="form-control form-control-lg"
                                         type="email"
                                         name="email"
+                                        ref={emailRef}
                                         value={formData.email}
                                         onChange={handleInputChange}
                                         required

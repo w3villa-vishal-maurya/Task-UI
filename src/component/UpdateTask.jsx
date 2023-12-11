@@ -1,7 +1,6 @@
-import { useNavigate, useLocation } from 'react-router-dom';
 import AuthContext from '../context/AuthProvider';
 import axios from '../api/axios';
-import React, { useState, useContext, useEffect, useRef } from 'react';
+import React, { useState, useContext, useRef } from 'react';
 import Task from './Task';
 
 
@@ -15,10 +14,6 @@ const UpdateTask = (props) => {
     const [description, setDescription] = useState(props.task?.description);
     const [completed, setCompleted] = useState(props.task?.completed);
 
-
-
-    const navigate = useNavigate();
-    const location = useLocation();
 
 
     const handleSubmit = async (e) => {

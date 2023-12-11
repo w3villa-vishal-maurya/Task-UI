@@ -472,3 +472,7 @@ label .label-text:before {
     cursor: pointer;
     opacity: 1;
 }
+
+.item-p{
+    cursor: pointer;
+}

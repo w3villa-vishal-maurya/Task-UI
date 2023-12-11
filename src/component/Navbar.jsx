@@ -3,24 +3,16 @@ import React, { useState, useContext, useEffect } from 'react';
 import { Dropdown, Collapse, initMDB } from "mdb-ui-kit";
 import AuthContext from '../context/AuthProvider';
 import UserProfile from './UserProfile';
-import {useNavigate, useLocation } from 'react-router-dom';
-
-const LOGOUT_USER = "/logout"
 
 const Navbar = () => {
-    const [errMsg, setErrMsg] = useState('');
+    const { setCurrentComponent } = useContext(AuthContext);
     const { isLogin, setIsLogin } = useContext(AuthContext);
-
-
-    const navigate = useNavigate();
-    const location = useLocation();
 
     useEffect(() => {
         initMDB({ Dropdown, Collapse })
     }, []);
 
 
-    const from = "/";
 
     const handleLogoutReq = async () => {
         localStorage.setItem(
@@ -30,11 +22,9 @@ const Navbar = () => {
 
         alert("You have been logged oot!!!");
         setIsLogin(false);
-        navigate(from, { replace: true });
-
+        window.location.reload(false);
     }
 
-    const { auth, setAuth, currentComponent, setCurrentComponent } = useContext(AuthContext);
     return (
         <>
             <nav class="navbar navbar-expand-lg nav-bg-color ">
@@ -86,9 +76,9 @@ const Navbar = () => {
                         :
 
                         <div class="d-flex align-items-center">
-                            <a class="link-secondary me-3" href="#">
+                            {/* <a class="link-secondary me-3" href="#">
                                 <i class="fas fa-shopping-cart"></i>
-                            </a>
+                            </a> */}
 
                             <div class="dropdown">
                                 <a

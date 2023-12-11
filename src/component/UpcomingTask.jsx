@@ -1,19 +1,18 @@
-import React, { useEffect, useState, useContext} from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import UpcomingTaskData from './UpcomingTaskData';
 import AuthContext from '../context/AuthProvider';
-import {useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import axios from '../api/axios';
 
 
 const PENDING_TASK = "/task/pending"
 
 const UpcomingTask = () => {
-    const { auth} = useContext(AuthContext);
+    const { auth } = useContext(AuthContext);
     const [allPendingTaskData, setAllPendigTaskData] = useState([]);
     const [errMsg, setErrMsg] = useState('');
 
     const navigate = useNavigate();
-    const location = useLocation();
 
     const loginFrom = "/login";
 
@@ -39,9 +38,11 @@ const UpcomingTask = () => {
                 }
                 else if (err.response?.status === 403) {
                     setErrMsg('User is not logged In');
+                    navigate(loginFrom, { replace: true });
                 }
                 else {
                     setErrMsg('Login failed');
+                    navigate(loginFrom, { replace: true });
                 }
 
                 // errRef.current.focus();

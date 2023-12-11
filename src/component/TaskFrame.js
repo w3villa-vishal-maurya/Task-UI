@@ -15,12 +15,12 @@ import Meeting from './Meeting';
 const TaskFrame = () => {
     const { auth, setAuth, currentComponent, setCurrentComponent } = useContext(AuthContext);
     const [errMsg, setErrMsg] = useState('');
-   
-  
+
+
     const [profileData, setProfileData] = useState([]);
 
     const [showInbox, setShowInbox] = useState(false);
- 
+
     const [showProfile, setShowProfile] = useState(false);
 
     const [isShowMeeting, setIsShowMeeting] = useState(false);
@@ -37,7 +37,7 @@ const TaskFrame = () => {
 
     const showPendingTask = async () => {
         // Make a POST request to the SignUp API with formData
-        
+
     };
 
     return (
@@ -47,27 +47,29 @@ const TaskFrame = () => {
                     <div class="left-content">
 
                         <ul class="action-list">
-                            <li class="item">
+                            <li class="item item-p">
                                 <img class="feather feather-star" src="svg/star.svg" alt="" />
-                                <span onClick={() => setCurrentComponent(<CreateTask  />)}>Create</span>
+                                <span onClick={() => setCurrentComponent(<CreateTask />)}>Create</span>
                             </li>
-                            <li class="item">
+                            <li class="item item-p">
                                 <img class="feather feather-inbox" src="../svg/inbox.svg" alt="" />
-                                <span onClick={() => setCurrentComponent(<Task  />)}>Inbox</span>
+                                <span onClick={() => setCurrentComponent(<Task />)}>Inbox</span>
                             </li>
-                            <li class="item">
+                            <li class="item item-p">
                                 <img class="feather feather-calendar" src="svg/calender.svg" alt="" />
-                                <span onClick={() => setCurrentComponent(<UpcomingTask/>)}>Upcoming</span>
+                                <span onClick={() => setCurrentComponent(<UpcomingTask />)}>Upcoming</span>
                             </li>
-                            <li class="item">
+                            <li class="item item-p">
+                                <img class="feather feather-users" src="svg/users.svg" alt="" />
+                                <span onClick={() => setIsShowMeeting(!isShowMeeting)}>Meetings</span>
+                            </li>
+
+                            <li class="item item-p">
                                 <img class="feather feather-hash" src="svg/hash.svg" alt="" />
                                 <span>Important</span>
                             </li>
 
-                            <li class="item">
-                                <img class="feather feather-users" src="svg/users.svg" alt="" />
-                                <span onClick={() => setIsShowMeeting(!isShowMeeting)}>Meetings</span>
-                            </li>
+
                             {/* <li class="item">
                                 <img class="feather feather-trash" src="svg/trash.svg" alt="" />
                                 <span>Trash</span>
@@ -107,8 +109,8 @@ const TaskFrame = () => {
 
 
 
-                {isShowMeeting ? <Meeting/> : ""}
-               
+                {isShowMeeting ? <Meeting /> : ""}
+
 
             </div>
         </>
