@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState, useContext } from 'react'
+import { Dropdown, Collapse, initMDB } from "mdb-ui-kit";
 import axios from '../api/axios';
 import AuthContext from '../context/AuthProvider';
 import { useNavigate } from 'react-router-dom';
@@ -9,18 +10,24 @@ const CREATE_TASK = "/task/createnew"
 const CreateTask = () => {
     const errRef = useRef();
 
-    const { auth, setCurrentComponent } = useContext(AuthContext);
+    const { auth, setCurrentComponent, isLogin } = useContext(AuthContext);
     const descriptionRef = useRef();
 
     const [description, setDescription] = useState('');
     const [errMsg, setErrMsg] = useState('');
 
-    const nevigate = useNavigate();
-
+    const navigate = useNavigate();
     const from = "/";
+    const loginFrom = "/login"
 
     useEffect(() => {
-        descriptionRef.current.focus();
+        if (!isLogin) {
+            navigate(loginFrom, { replace: true });
+        }
+        else {
+            initMDB({ Dropdown, Collapse });
+            descriptionRef.current.focus();
+        }
     }, [])
 
     useEffect(() => {
@@ -38,14 +45,14 @@ const CreateTask = () => {
             );
 
             alert(response.data.message);
-            nevigate(from, { replace: true });
-            setCurrentComponent(<Task/>)
+            navigate(from, { replace: true });
+            setCurrentComponent(<Task />)
         } catch (err) {
             if (!err?.response) {
                 setErrMsg('No server response');
             }
             else if (err.response?.status === 400) {
-                setErrMsg('Missing Username or Password');
+                setErrMsg('Please create a task...');
             } else if (err.response?.status === 401) {
                 setErrMsg('Unautherized');
             }
@@ -84,6 +91,7 @@ const CreateTask = () => {
                                 onChange={(e) => setDescription(e.target.value)}
                                 value={description}
                                 placeholder="Task"
+                                required
                             />
                         </div>
 

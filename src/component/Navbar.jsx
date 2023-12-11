@@ -84,7 +84,6 @@ const Navbar = () => {
                                 <a
                                     data-mdb-dropdown-init
                                     class="dropdown-toggle d-flex align-items-center hidden-arrow"
-                                    href="/"
                                     id="navbarDropdownMenuAvatar"
                                     role="button"
                                     aria-expanded="false"

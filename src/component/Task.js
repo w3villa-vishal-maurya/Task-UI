@@ -2,28 +2,25 @@ import React, { useState, useContext, useEffect } from 'react';
 import axios from "../api/axios"
 import AuthContext from '../context/AuthProvider';
 import AllTask from './AllTask';
-import {useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { Dropdown, Collapse, initMDB } from "mdb-ui-kit";
 
 const SHOWALL_TASK = "/task/showall"
 
 const Task = () => {
-    const { auth } = useContext(AuthContext);
-    const [allTaskData, setAllTaskData] = useState([]);
-    const [isDeletedData, setIsDeletedData] = useState('');
-
-
+    const { auth, isLogin } = useContext(AuthContext);
+    const loginFrom = "/login";
     const navigate = useNavigate();
     const location = useLocation();
 
-    const loginFrom = "/login";
-
+    const [allTaskData, setAllTaskData] = useState([]);
+    const [isDeletedData, setIsDeletedData] = useState('');
     const [errMsg, setErrMsg] = useState('');
 
     useEffect(() => {
-        async function getAllData(){
+        async function getAllData() {
             try {
-
-                console.log(auth.accessToken);
+                initMDB({ Dropdown, Collapse });
                 const response = await axios.get(SHOWALL_TASK, {
                     headers: { Authorization: auth.accessToken }
                 });
@@ -50,16 +47,20 @@ const Task = () => {
                 }
 
                 // errRef.current.focus();
-                console.log(errMsg);
             }
         }
 
-        getAllData();
+        if (!isLogin) {
+            navigate(loginFrom, { replace: true });
+        }
+        else {
+            getAllData();
+        }
     }, [isDeletedData])
 
     return (
         <>
-            <p>{errMsg}</p>
+
             <div class="page-content">
                 <div class="header">Today Tasks</div>
 
@@ -83,15 +84,19 @@ const Task = () => {
                 </div>
 
                 <div class="tasks-wrapper">
-                    {allTaskData?.map((item) => (
-                        <AllTask
-                            taskId= {item?._id}
-                            description={item.description}
-                            status={item.completed}
-                            isDeletedData = {isDeletedData}
-                            setIsDeletedData = {setIsDeletedData}
-                        />
-                    ))}
+                    {allTaskData.length > 0 ?
+                        allTaskData?.map((item) => (
+                            <AllTask
+                                taskId={item?._id}
+                                description={item.description}
+                                status={item.completed}
+                                isDeletedData={isDeletedData}
+                                setIsDeletedData={setIsDeletedData}
+                            />
+                        ))
+                        :
+                        <div>{errMsg}</div>
+                    }
                 </div>
             </div>
         </>
