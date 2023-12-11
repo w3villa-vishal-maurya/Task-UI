@@ -2,13 +2,14 @@ import React, { useEffect, useRef, useState, useContext } from 'react'
 import axios from '../api/axios';
 import AuthContext from '../context/AuthProvider';
 import { useNavigate, useLocation } from 'react-router-dom';
+import Task from './Task';
 
 const CREATE_TASK = "/task/createnew"
 
 const CreateTask = () => {
     const errRef = useRef();
 
-    const { auth, setAuth } = useContext(AuthContext);
+    const { auth, currentComponent, setCurrentComponent } = useContext(AuthContext);
     const descriptionRef = useRef();
 
     const [description, setDescription] = useState('');
@@ -39,6 +40,7 @@ const CreateTask = () => {
 
             alert(response.data.message);
             nevigate(from, { replace: true });
+            setCurrentComponent(<Task/>)
         } catch (err) {
             if (!err?.response) {
                 setErrMsg('No server response');

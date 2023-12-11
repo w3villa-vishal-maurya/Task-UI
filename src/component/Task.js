@@ -2,7 +2,7 @@ import React, { useState, useContext, useEffect } from 'react';
 import axios from "../api/axios"
 import AuthContext from '../context/AuthProvider';
 import AllTask from './AllTask';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
+import {useNavigate, useLocation } from 'react-router-dom';
 
 const SHOWALL_TASK = "/task/showall"
 

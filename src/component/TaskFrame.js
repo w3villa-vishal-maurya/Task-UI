@@ -4,10 +4,8 @@ import Task from './Task'
 import Login from './Login'
 import AuthContext from '../context/AuthProvider';
 import CreateTask from './CreateTask';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
-import axios from '../api/axios';
+import { useNavigate, useLocation } from 'react-router-dom';
 import UpcomingTask from './UpcomingTask';
-import UserProfile from './UserProfile';
 import Meeting from './Meeting';
 
 

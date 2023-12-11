@@ -1,7 +1,8 @@
-import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import AuthContext from '../context/AuthProvider';
 import axios from '../api/axios';
-import React, { useState, useContext, useEffect, useRef } from 'react';;
+import React, { useState, useContext, useEffect, useRef } from 'react';
+import Task from './Task';
 
 
 const UpdateTask = (props) => {
@@ -9,7 +10,7 @@ const UpdateTask = (props) => {
     const descriptionRef = useRef();
     const completedRef = useRef();
 
-    const { auth, setAuth, currentComponent, setCurrentComponent } = useContext(AuthContext);
+    const { auth, setCurrentComponent } = useContext(AuthContext);
     const [errMsg, setErrMsg] = useState('');
     const [description, setDescription] = useState(props.task?.description);
     const [completed, setCompleted] = useState(props.task?.completed);
@@ -36,6 +37,7 @@ const UpdateTask = (props) => {
 
             alert("Task has been Updated!!");
             // navigate(from, { replace: true });
+            setCurrentComponent(<Task/>)
         } catch (err) {
             if (!err?.response) {
                 setErrMsg('No server response');

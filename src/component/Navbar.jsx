@@ -3,8 +3,7 @@ import React, { useState, useContext, useEffect } from 'react';
 import { Dropdown, Collapse, initMDB } from "mdb-ui-kit";
 import AuthContext from '../context/AuthProvider';
 import UserProfile from './UserProfile';
-import axios from "../api/axios"
-import { Link, useNavigate, useLocation } from 'react-router-dom';
+import {useNavigate, useLocation } from 'react-router-dom';
 
 const LOGOUT_USER = "/logout"
 

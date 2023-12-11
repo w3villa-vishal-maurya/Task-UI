@@ -1,12 +1,8 @@
 import React, { useEffect, useState, useContext } from 'react'
 import "./style/general.css"
-import Task from './Task'
-import Login from './Login'
 import AuthContext from '../context/AuthProvider';
-import CreateTask from './CreateTask';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
+import {useNavigate, useLocation } from 'react-router-dom';
 import axios from '../api/axios';
-import UpcomingTask from './UpcomingTask';
 
 
 

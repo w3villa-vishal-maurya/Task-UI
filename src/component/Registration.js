@@ -1,7 +1,7 @@
 import React, { useEffect, useRef} from 'react'
 import axios from 'axios';
 import { useState } from 'react';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 const Registration = () => {
     const nameRef = useRef();
