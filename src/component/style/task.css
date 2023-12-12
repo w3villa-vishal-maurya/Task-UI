@@ -239,10 +239,11 @@ label .label-text:before {
 }
 
 .single-line {
-    width: 10px;
     overflow: hidden;
-    text-overflow: ellipsis;
     white-space: nowrap;
+    text-overflow: ellipsis;
+    max-width: 550px; /* Adjust the max-width to your desired width */
+    display: inline-block; /* Ensure the element behaves as a block and respects max-width */
 }
 
 .tag {

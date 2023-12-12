@@ -26,7 +26,13 @@ const Task = () => {
                 });
 
                 // Set the response data in state
-                setAllTaskData(response?.data?.Task);
+                if(response?.data?.Task){
+                    setAllTaskData(response?.data?.Task);
+                }
+                else{
+                    setAllTaskData([]);
+                    setErrMsg('You have not any current task yet...');
+                }
             } catch (err) {
                 if (!err?.response) {
                     setErrMsg('No server response');
@@ -56,7 +62,7 @@ const Task = () => {
         else {
             getAllData();
         }
-    }, [isDeletedData])
+    }, [isDeletedData, setErrMsg])
 
     return (
         <>
@@ -84,7 +90,8 @@ const Task = () => {
                 </div>
 
                 <div class="tasks-wrapper">
-                    {allTaskData.length > 0 ?
+                    {
+                    allTaskData.length > 0 ?
                         allTaskData?.map((item) => (
                             <AllTask
                                 taskId={item?._id}

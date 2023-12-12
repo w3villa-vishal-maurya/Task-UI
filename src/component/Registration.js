@@ -1,7 +1,9 @@
-import React, { useEffect, useRef} from 'react'
-import axios from 'axios';
+import React, { useEffect, useRef } from 'react'
+import axios from '../api/axios';
 import { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+
+const REGISTER_URL = "/register"
 
 const Registration = () => {
     const nameRef = useRef();
@@ -13,13 +15,21 @@ const Registration = () => {
         phoneNumber: ''
     });
 
-    const [response, setResponse] = useState('');
 
     const [errMsg, setErrMsg] = useState('');
 
-    useEffect(()=>{
+    useEffect(() => {
+        if (errMsg) {
+            alert(errMsg);
+            window.location.reload();
+        }
+    }, [errMsg]);
+
+
+    useEffect(() => {
         nameRef.current.focus();
-    },[])
+    }, [])
+
 
     // Handle form input changes
     const handleInputChange = (e) => {
@@ -38,43 +48,33 @@ const Registration = () => {
     // Handle form submission
     const handleSubmit = async (e) => {
         e.preventDefault();
-
-        // Make a POST request to the SignUp API with formData
         try {
-            const response = await axios.post('http://localhost:10000/register', formData);
+            const response = await axios.post(REGISTER_URL, formData);
             // Set the response data in state
             if (response.status === 200) {
-                console.log(response.data);
                 alert("You are registerd successfully!!")
                 navigate(from, { replace: true })// Set the success message in state
-            } else if (response.status === 409) {
-                setResponse("User already exists!");
-                setErrMsg("User already exists!"); // Handle 409 Conflict (user already exists)
-            } else {
-                console.error('Error:', response.status, response.statusText);
-                setResponse("An error occurred. Please try again.");
-                setErrMsg("An error occurred. Please try again.");// Handle other status codes
             }
-
-
         } catch (err) {
-            if (!err?.response) {
-                setErrMsg('No server response');
-            }
-            else if (err.response?.status === 400) {
+            if (err.response?.status === 400) {
                 setErrMsg('Invalid Details');
-            } else if (err.response?.status === 401) {
+            }
+
+            else if (err.response?.status === 401) {
                 setErrMsg('Unautherized');
             }
             else if (err.response?.status === 409) {
                 setErrMsg('User Already exists!');
+            }
+            else if (!err?.response) {
+                setErrMsg('No server response');
             }
             else {
                 setErrMsg('Login failed');
             }
 
             // errRef.current.focus();
-            console.log(errMsg);
+            // console.log(errMsg);
         }
     };
 
@@ -82,7 +82,6 @@ const Registration = () => {
         <>
             <section class="vh-100 bg-image reg-style-1"
             >
-                <div class="d-flex align-items-center">{errMsg}</div>
                 <div class="mask d-flex align-items-center h-100 gradient-custom-3">
                     <div class="container h-100">
                         <div class="row d-flex justify-content-center align-items-center h-100">
@@ -100,7 +99,7 @@ const Registration = () => {
                                                 </label>
                                                 <input
                                                     id="form3Example1cg"
-                                                    ref = {nameRef}
+                                                    ref={nameRef}
                                                     className="form-control form-control-lg"
                                                     type="text"
                                                     name="name"

@@ -50,7 +50,6 @@ function Login() {
             // Set the response data in state
 
             const accessToken = response.data?.data?.accessToken;
-            // console.log(response.data?.data?.accessToken);
             setResponse(response.data.message);
             setAuth({ ...formData, accessToken });
             setIsLogin(true);
@@ -63,7 +62,6 @@ function Login() {
 
             navigate(from, { replace: true });
         } catch (err) {
-            console.log(err.response);
             if (!err?.response) {
                 setErrMsg('No server response');
             }
