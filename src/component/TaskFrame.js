@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react';
+import { Dropdown, Collapse, initMDB } from "mdb-ui-kit";
 import "./style/task.css"
 import Task from './Task'
-import Login from './Login'
 import AuthContext from '../context/AuthProvider';
 import CreateTask from './CreateTask';
 import { useNavigate, useLocation } from 'react-router-dom';
@@ -17,11 +17,10 @@ const TaskFrame = () => {
     const [errMsg, setErrMsg] = useState('');
 
 
-    const [profileData, setProfileData] = useState([]);
+    useEffect(()=>{
+        initMDB({ Dropdown, Collapse });
+    }, [])
 
-    const [showInbox, setShowInbox] = useState(false);
-
-    const [showProfile, setShowProfile] = useState(false);
 
     const [isShowMeeting, setIsShowMeeting] = useState(false);
 
@@ -37,7 +36,6 @@ const TaskFrame = () => {
 
     const showPendingTask = async () => {
         // Make a POST request to the SignUp API with formData
-
     };
 
     return (
