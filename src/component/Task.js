@@ -2,7 +2,7 @@ import React, { useState, useContext, useEffect } from 'react';
 import axios from "../api/axios"
 import AuthContext from '../context/AuthProvider';
 import AllTask from './AllTask';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Dropdown, Collapse, initMDB } from "mdb-ui-kit";
 
 const SHOWALL_TASK = "/task/showall"
@@ -11,7 +11,6 @@ const Task = () => {
     const { auth, isLogin } = useContext(AuthContext);
     const loginFrom = "/login";
     const navigate = useNavigate();
-    const location = useLocation();
 
     const [allTaskData, setAllTaskData] = useState([]);
     const [isDeletedData, setIsDeletedData] = useState('');

@@ -7,13 +7,12 @@ const LOGIN_URL = "/login"
 
 function Login() {
     const emailRef = useRef();
-    const { auth, setAuth, setIsLogin } = useAuth();
+    const {setAuth, setIsLogin } = useAuth();
 
     const navigate = useNavigate();
     const location = useLocation();
 
     const [errMsg, setErrMsg] = useState('');
-    const [success, setSuccess] = useState(false);
     const [formData, setFormData] = useState({
         email: '',
         password: '',

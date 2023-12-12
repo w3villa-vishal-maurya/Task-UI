@@ -4,7 +4,6 @@ import "./style/task.css"
 import Task from './Task'
 import AuthContext from '../context/AuthProvider';
 import CreateTask from './CreateTask';
-import { useNavigate, useLocation } from 'react-router-dom';
 import UpcomingTask from './UpcomingTask';
 import Meeting from './Meeting';
 
@@ -13,30 +12,12 @@ import Meeting from './Meeting';
 
 
 const TaskFrame = () => {
-    const { auth, setAuth, currentComponent, setCurrentComponent } = useContext(AuthContext);
-    const [errMsg, setErrMsg] = useState('');
-
-
+    const {currentComponent, setCurrentComponent } = useContext(AuthContext);
     useEffect(()=>{
         initMDB({ Dropdown, Collapse });
     }, [])
 
-
     const [isShowMeeting, setIsShowMeeting] = useState(false);
-
-    const navigate = useNavigate();
-    const location = useLocation();
-
-    const createFrom = location.state?.from?.pathname || "/createtask";
-    const loginFrom = "/login";
-
-    const createTask = async () => {
-        navigate(createFrom, { replace: true });
-    }
-
-    const showPendingTask = async () => {
-        // Make a POST request to the SignUp API with formData
-    };
 
     return (
         <>

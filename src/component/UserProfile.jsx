@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react'
 import "./style/general.css"
 import AuthContext from '../context/AuthProvider';
-import {useNavigate, useLocation } from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 import axios from '../api/axios';
 
 
@@ -9,12 +9,11 @@ import axios from '../api/axios';
 const SHOW_PROFILE = "/profile";
 
 const UserProfile = () => {
-    const { auth, setAuth, currentComponent, setCurrentComponent } = useContext(AuthContext);
+    const { auth} = useContext(AuthContext);
     const [showProfileData, setShowProfileData] = useState([]);
     const [errMsg, setErrMsg] = useState('');
 
     const navigate = useNavigate();
-    const location = useLocation();
 
     const loginFrom = "/login";
 
@@ -27,8 +26,6 @@ const UserProfile = () => {
                     headers: { Authorization: auth.accessToken }
                 });
 
-                // Set the response data in state
-                // console.log(response.data?.profile);
                 setShowProfileData(response.data?.profile);
             } catch (err) {
                 if (!err?.response) {

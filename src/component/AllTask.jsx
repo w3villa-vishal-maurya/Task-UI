@@ -1,7 +1,7 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext} from 'react';
 import axios from "../api/axios"
 import AuthContext from '../context/AuthProvider';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
+import {useNavigate, useLocation } from 'react-router-dom';
 import UpdateTask from './UpdateTask';
 
 

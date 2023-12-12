@@ -1,5 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
-// Initialization for ES Users
+import React, {useContext, useEffect } from 'react';
 import { Dropdown, Collapse, initMDB } from "mdb-ui-kit";
 import AuthContext from '../context/AuthProvider';
 import UserProfile from './UserProfile';
@@ -20,7 +19,7 @@ const Navbar = () => {
             JSON.stringify({ "email": null, password: null, "accessToken": null })
         );
 
-        alert("You have been logged oot!!!");
+        alert("You have been logged out!!!");
         setIsLogin(false);
         window.location.reload(false);
     }
