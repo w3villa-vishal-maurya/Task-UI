@@ -25,10 +25,10 @@ const Task = () => {
                 });
 
                 // Set the response data in state
-                if(response?.data?.Task){
+                if (response?.data?.Task) {
                     setAllTaskData(response?.data?.Task);
                 }
-                else{
+                else {
                     setAllTaskData([]);
                     setErrMsg('You have not any current task yet...');
                 }
@@ -61,6 +61,7 @@ const Task = () => {
         else {
             getAllData();
         }
+         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDeletedData, setErrMsg])
 
     return (
@@ -90,18 +91,18 @@ const Task = () => {
 
                 <div class="tasks-wrapper">
                     {
-                    allTaskData.length > 0 ?
-                        allTaskData?.map((item) => (
-                            <AllTask
-                                taskId={item?._id}
-                                description={item.description}
-                                status={item.completed}
-                                isDeletedData={isDeletedData}
-                                setIsDeletedData={setIsDeletedData}
-                            />
-                        ))
-                        :
-                        <div>{errMsg}</div>
+                        allTaskData.length > 0 ?
+                            allTaskData?.map((item) => (
+                                <AllTask
+                                    taskId={item?._id}
+                                    description={item.description}
+                                    status={item.completed}
+                                    isDeletedData={isDeletedData}
+                                    setIsDeletedData={setIsDeletedData}
+                                />
+                            ))
+                            :
+                            <div>{errMsg}</div>
                     }
                 </div>
             </div>

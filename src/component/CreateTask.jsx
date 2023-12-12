@@ -28,6 +28,8 @@ const CreateTask = () => {
             initMDB({ Dropdown, Collapse });
             descriptionRef.current.focus();
         }
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     useEffect(() => {
