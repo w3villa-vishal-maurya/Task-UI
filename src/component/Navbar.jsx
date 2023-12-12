@@ -80,7 +80,7 @@ const Navbar = () => {
                             </a> */}
 
                             <div class="dropdown">
-                                <a
+                                <div
                                     data-mdb-dropdown-init
                                     class="dropdown-toggle d-flex align-items-center hidden-arrow"
                                     id="navbarDropdownMenuAvatar"
@@ -94,19 +94,19 @@ const Navbar = () => {
                                         alt="Black and White Portrait of a Man"
                                         loading="lazy"
                                     />
-                                </a>
+                                </div>
                                 <ul
                                     class="dropdown-menu dropdown-menu-end"
                                     aria-labelledby="navbarDropdownMenuAvatar"
                                 >
                                     <li>
-                                        <a class="dropdown-item" onClick={() => setCurrentComponent(<UserProfile />)}>My profile</a>
+                                        <div class="dropdown-item" onClick={() => setCurrentComponent(<UserProfile />)}>My profile</div>
                                     </li>
                                     <li>
-                                        <a class="dropdown-item" href="#">Settings</a>
+                                        <div class="dropdown-item" >Settings</div>
                                     </li>
                                     <li>
-                                        <a class="dropdown-item" onClick={handleLogoutReq}>Logout</a>
+                                        <div class="dropdown-item" onClick={handleLogoutReq}>Logout</div>
                                     </li>
                                 </ul>
                             </div>

@@ -1,17 +1,13 @@
-import React, { useState, useContext} from 'react';
+import React, { useState, useContext } from 'react';
 import axios from "../api/axios"
 import AuthContext from '../context/AuthProvider';
-import {useNavigate, useLocation } from 'react-router-dom';
 import UpdateTask from './UpdateTask';
 
 
 
 const AllTask = (props) => {
-    const { auth, setAuth, currentComponent, setCurrentComponent } = useContext(AuthContext);
+    const { auth, setCurrentComponent } = useContext(AuthContext);
     const [errMsg, setErrMsg] = useState('');
-
-    const navigate = useNavigate();
-    const location = useLocation();
 
 
     const handleUpdateTask = (event) => {
@@ -21,7 +17,7 @@ const AllTask = (props) => {
             taskId: props.taskId
         }
 
-        setCurrentComponent(<UpdateTask task={task}/>)
+        setCurrentComponent(<UpdateTask task={task} />)
     };
 
 
@@ -37,20 +33,20 @@ const AllTask = (props) => {
 
             // Set the response data in state
             // console.log(response.data);
-            if(response?.data?.title === "Successfull"){
+            if (response?.data?.title === "Successfull") {
                 props.setIsDeletedData(response);
                 alert(response?.data?.message);
             }
         } catch (err) {
             if (!err?.response) {
                 setErrMsg('No server response');
-                
+
             }
             else if (err.response?.status === 400) {
                 setErrMsg('You have not any current task yet...');
             } else if (err.response?.status === 401) {
                 setErrMsg('Unautherized');
-               
+
             }
             else if (err.response?.status === 403) {
                 setErrMsg('User is not logged In');
@@ -58,28 +54,28 @@ const AllTask = (props) => {
             else {
                 setErrMsg('Login failed');
             }
-
-            // errRef.current.focus();
-            // console.log(errMsg);
         }
     }
 
     return (
-        <div class="task">
-            <input
-                class="task-item"
-                name="task"
-                type="checkbox"
-                checked={props.status}
-            />
-            <label htmlFor={props?.taskId}>
-                <span class="label-text single-line">{props?.description}</span>
-            </label>
-            <span id={props?.taskId}>
-                <span class="tag" onClick={handleUpdateTask}><img class="feather feather-edit" src="svg/edit.svg" alt="" /></span>
-                <span class="tag tag-delete" onClick={handleDeleteTask}> <img class="feather feather-trash delete" src="svg/trash.svg" alt="" /></span>
-            </span>
-        </div>
+        <>
+            { errMsg ? <p>{errMsg}</p> : ''}
+            <div class="task">
+                <input
+                    class="task-item"
+                    name="task"
+                    type="checkbox"
+                    checked={props.status}
+                />
+                <label htmlFor={props?.taskId}>
+                    <span class="label-text single-line">{props?.description}</span>
+                </label>
+                <span id={props?.taskId}>
+                    <span class="tag" onClick={handleUpdateTask}><img class="feather feather-edit" src="svg/edit.svg" alt="" /></span>
+                    <span class="tag tag-delete" onClick={handleDeleteTask}> <img class="feather feather-trash delete" src="svg/trash.svg" alt="" /></span>
+                </span>
+            </div>
+        </>
     )
 }
 

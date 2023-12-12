@@ -17,7 +17,6 @@ function Login() {
         email: '',
         password: '',
     });
-    const [response, setResponse] = useState('');
 
     const from = location.state?.from?.pathname || "/";
 
@@ -49,7 +48,6 @@ function Login() {
             // Set the response data in state
 
             const accessToken = response.data?.data?.accessToken;
-            setResponse(response.data.message);
             setAuth({ ...formData, accessToken });
             setIsLogin(true);
 
@@ -83,6 +81,7 @@ function Login() {
     return (<>
         <section class="vh-100 style-1" >
             <div class="container py-5 h-100">
+            { errMsg ? <p>{errMsg}</p> : ''}
                 <div class="row d-flex justify-content-center align-items-center h-100">
                     <div class="col-12 col-md-8 col-lg-6 col-xl-5">
                         <div class="card shadow-2-strong style-2">

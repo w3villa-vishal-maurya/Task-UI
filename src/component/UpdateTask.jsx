@@ -21,7 +21,7 @@ const UpdateTask = (props) => {
             e.preventDefault();
             const UPDATE_TASK = `/task/${props.task?.taskId}`;
 
-            const response = await axios.put(UPDATE_TASK, {
+            await axios.put(UPDATE_TASK, {
                 "description": description,
                 "completed": completed
             },
@@ -32,7 +32,7 @@ const UpdateTask = (props) => {
 
             alert("Task has been Updated!!");
             // navigate(from, { replace: true });
-            setCurrentComponent(<Task/>)
+            setCurrentComponent(<Task />)
         } catch (err) {
             if (!err?.response) {
                 setErrMsg('No server response');
