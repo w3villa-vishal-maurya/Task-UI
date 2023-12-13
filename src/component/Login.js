@@ -7,12 +7,11 @@ const LOGIN_URL = "/login"
 
 function Login() {
     const emailRef = useRef();
-    const {setAuth, setIsLogin } = useAuth();
+    const { setAuth, setIsLogin } = useAuth();
 
     const navigate = useNavigate();
     const location = useLocation();
 
-    const [errMsg, setErrMsg] = useState('');
     const [formData, setFormData] = useState({
         email: '',
         password: '',
@@ -52,7 +51,7 @@ function Login() {
             setIsLogin(true);
 
             // Store email and accesstoken to localstorage
-            localStorage.setItem(
+            sessionStorage.setItem(
                 "email",
                 JSON.stringify({ "email": formData.email, password: formData.password, "accessToken": accessToken })
             );
@@ -60,18 +59,19 @@ function Login() {
             navigate(from, { replace: true });
         } catch (err) {
             if (!err?.response) {
-                setErrMsg('No server response');
+                // setErrMsg('No server response');
+                alert("No server response, Reload the page... or server is busy !");
             }
             else if (err.response?.status === 400) {
-                setErrMsg('Missing Username or Password');
+
                 alert("Incorrect Password!");
 
             } else if (err.response?.status === 401) {
-                setErrMsg('Unautherized');
+
                 alert("Email id is not registred !!!");
             }
             else {
-                setErrMsg('Login failed');
+
                 alert("Incorrect Email or Password!");
             }
 
@@ -79,17 +79,17 @@ function Login() {
     };
 
     return (<>
-        <section class="vh-100 style-1" >
-            <div class="container py-5 h-100">
-            { errMsg ? <p>{errMsg}</p> : ''}
-                <div class="row d-flex justify-content-center align-items-center h-100">
-                    <div class="col-12 col-md-8 col-lg-6 col-xl-5">
-                        <div class="card shadow-2-strong style-2">
-                            <form class="card-body p-5 text-center" onSubmit={handleSubmit}>
+        <section className="vh-100 style-1" >
+            <div className="container py-5 h-100">
+                {/* { errMsg ? <p>{errMsg}</p> : ''} */}
+                <div className="row d-flex justify-content-center align-items-center h-100">
+                    <div className="col-12 col-md-8 col-lg-6 col-xl-5">
+                        <div className="card shadow-2-strong style-2">
+                            <form className="card-body p-5 text-center" onSubmit={handleSubmit}>
 
-                                <h3 class="mb-5">Sign in</h3>
+                                <h3 className="mb-5">Sign in</h3>
 
-                                <div class="form-outline mb-4">
+                                <div className="form-outline mb-4">
 
                                     <label
                                         htmlFor="typeEmailX-2"
@@ -108,7 +108,7 @@ function Login() {
                                     />
                                 </div>
 
-                                <div class="form-outline mb-4">
+                                <div className="form-outline mb-4">
 
                                     <label
                                         htmlFor="typePasswordX-2"
@@ -116,7 +116,7 @@ function Login() {
                                         Password
                                     </label>
                                     <input
-                                        class="form-control form-control-lg"
+                                        className="form-control form-control-lg"
                                         type="password"
                                         name="password"
                                         value={formData.password}
@@ -126,22 +126,24 @@ function Login() {
                                 </div>
 
 
-                                <div class="form-check d-flex justify-content-start mb-4">
-                                    <input class="form-check-input" type="checkbox" value="" id="form1Example3" />
-                                    <label class="form-check-label" for="form1Example3"> Remember password </label>
+                                <div className="form-check d-flex justify-content-start mb-4">
+                                    <input className="form-check-input" type="checkbox" value="" id="form1Example3" />
+                                    <label className="form-check-label" for="form1Example3"> Remember password </label>
                                 </div>
 
-                                <button class="btn btn-primary btn-lg btn-block" type="submit" >Login</button>
+                                <button className="btn btn-primary btn-lg btn-block" type="submit" >Login</button>
 
-                                {/* <hr class="my-4" />
+                                {/* <hr className="my-4" />
 
-                                <button class="btn btn-lg btn-block btn-primary style-3"
-                                    type="submit"><i class="fab fa-google me-2"></i> Sign in with google</button>
-                                <button class="btn btn-lg btn-block btn-primary mb-2 style-4"
-                                    type="submit"><i class="fab fa-facebook-f me-2"></i>Sign in with facebook</button> */}
+                                <button className="btn btn-lg btn-block btn-primary style-3"
+                                    type="submit"><i className="fab fa-google me-2"></i> Sign in with google</button>
+                                <button className="btn btn-lg btn-block btn-primary mb-2 style-4"
+                                    type="submit"><i className="fab fa-facebook-f me-2"></i>Sign in with facebook</button> */}
 
-                                <p class="text-center text-muted mt-5 mb-0">New  account? <a href="/register"
-                                    class="fw-bold text-body"><u>Register here</u></a></p>
+                                <p className="text-center text-muted mt-5 mb-0"><a href="/forget-password"
+                                    className="fw-bold text-body">Forget Passowrd</a></p>
+                                <p className="text-center text-muted mb-0">New  account? <a href="/register"
+                                    className="fw-bold text-body">Register here</a></p>
 
                             </form>
                         </div>

@@ -10,7 +10,7 @@ const CREATE_TASK = "/task/createnew"
 const CreateTask = () => {
     const errRef = useRef();
 
-    const { auth, setCurrentComponent, isLogin } = useContext(AuthContext);
+    const { auth, setCurrentComponent} = useContext(AuthContext);
     const descriptionRef = useRef();
 
     const [description, setDescription] = useState('');
@@ -18,17 +18,10 @@ const CreateTask = () => {
 
     const navigate = useNavigate();
     const from = "/";
-    const loginFrom = "/login"
 
     useEffect(() => {
-        if (!isLogin) {
-            navigate(loginFrom, { replace: true });
-        }
-        else {
-            initMDB({ Dropdown, Collapse });
-            descriptionRef.current.focus();
-        }
-
+        initMDB({ Dropdown, Collapse });
+        descriptionRef.current.focus();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 

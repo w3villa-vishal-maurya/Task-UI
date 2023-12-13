@@ -1,23 +1,26 @@
 import React, { useState, useContext } from 'react';
 import axios from "../api/axios"
 import AuthContext from '../context/AuthProvider';
-import UpdateTask from './UpdateTask';
+import { useNavigate } from 'react-router-dom';
 
 
 
 const AllTask = (props) => {
-    const { auth, setCurrentComponent } = useContext(AuthContext);
+    const { auth} = useContext(AuthContext);
     const [errMsg, setErrMsg] = useState('');
 
+    const navigate = useNavigate();
 
-    const handleUpdateTask = (event) => {
+
+    const handleUpdateTask = () => {
         const task = {
             description: props.description,
             completed: props?.status ? true : false,
             taskId: props.taskId
         }
 
-        setCurrentComponent(<UpdateTask task={task} />)
+        // setCurrentComponent(<UpdateTask task={task} />)
+        navigate("/update-task", { state: { task } });
     };
 
 
@@ -60,19 +63,19 @@ const AllTask = (props) => {
     return (
         <>
             { errMsg ? <p>{errMsg}</p> : ''}
-            <div class="task">
+            <div className="task">
                 <input
-                    class="task-item"
+                    className="task-item"
                     name="task"
                     type="checkbox"
                     checked={props.status}
                 />
                 <label htmlFor={props?.taskId}>
-                    <span class="label-text single-line">{props?.description}</span>
+                    <span className="label-text ">{props?.description}</span>
                 </label>
                 <span id={props?.taskId}>
-                    <span class="tag" onClick={handleUpdateTask}><img class="feather feather-edit" src="svg/edit.svg" alt="" /></span>
-                    <span class="tag tag-delete" onClick={handleDeleteTask}> <img class="feather feather-trash delete" src="svg/trash.svg" alt="" /></span>
+                    <span className="tag" onClick={handleUpdateTask}><img className="feather feather-edit" src="svg/edit.svg" alt="" /></span>
+                    <span className="tag tag-delete" onClick={handleDeleteTask}> <img className="feather feather-trash delete" src="svg/trash.svg" alt="" /></span>
                 </span>
             </div>
         </>

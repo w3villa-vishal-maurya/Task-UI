@@ -55,50 +55,50 @@ const UserProfile = () => {
     },[])
     return (
         <>
-            <section class="user-style-1 page-content" >
-                <div class="container py-5 h-100">
-                    <div class="row d-flex justify-content-center align-items-center h-100">
-                        <div class="col col-lg-12 mb-4 mb-lg-0">
-                            <div class="card mb-3 user-style-2">
-                                <div class="row g-0">
-                                    <div class="col-md-4 gradient-custom text-center text-white user-style-3"
+            <section className="user-style-1 page-content" >
+                <div className="container py-5 h-100">
+                    <div className="row d-flex justify-content-center align-items-center h-100">
+                        <div className="col col-lg-12 mb-4 mb-lg-0">
+                            <div className="card mb-3 user-style-2">
+                                <div className="row g-0">
+                                    <div className="col-md-4 gradient-custom text-center text-white user-style-3"
                                     >
                                         <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp"
-                                            alt="Avatar" class="img-fluid my-5 user-style-4" />
+                                            alt="Avatar" className="img-fluid my-5 user-style-4" />
                                         <h5>{showProfileData[0]?.name}</h5>
                                         <p>Web Developer</p>
-                                        <i class="far fa-edit mb-5"></i>
+                                        <i className="far fa-edit mb-5"></i>
                                     </div>
-                                    <div class="col-md-8">
-                                        <div class="card-body p-4">
+                                    <div className="col-md-8">
+                                        <div className="card-body p-4">
                                             <h6>Information</h6>
-                                            <hr class="mt-0 mb-4" />
-                                            <div class="row pt-1">
-                                                <div class="col-6 mb-3">
+                                            <hr className="mt-0 mb-4" />
+                                            <div className="row pt-1">
+                                                <div className="col-6 mb-3">
                                                     <h6>email</h6>
-                                                    <p class="text-muted">{showProfileData[0]?.email}</p>
+                                                    <p className="text-muted">{showProfileData[0]?.email}</p>
                                                 </div>
-                                                <div class="col-6 mb-3">
+                                                <div className="col-6 mb-3">
                                                     <h6>Phone</h6>
-                                                    <p class="text-muted">{showProfileData[0]?.phoneNumber}</p>
+                                                    <p className="text-muted">{showProfileData[0]?.phoneNumber}</p>
                                                 </div>
                                             </div>
                                             <h6>Projects</h6>
-                                            <hr class="mt-0 mb-4" />
-                                            <div class="row pt-1">
-                                                <div class="col-6 mb-3">
+                                            <hr className="mt-0 mb-4" />
+                                            <div className="row pt-1">
+                                                <div className="col-6 mb-3">
                                                     <h6>Recent</h6>
-                                                    <p class="text-muted">Lorem ipsum</p>
+                                                    <p className="text-muted">Lorem ipsum</p>
                                                 </div>
-                                                <div class="col-6 mb-3">
+                                                <div className="col-6 mb-3">
                                                     <h6>Most Viewed</h6>
-                                                    <p class="text-muted">Dolor sit amet</p>
+                                                    <p className="text-muted">Dolor sit amet</p>
                                                 </div>
                                             </div>
-                                            <div class="d-flex justify-content-start">
-                                                <a href="#!"><i class="fab fa-facebook-f fa-lg me-3"></i></a>
-                                                <a href="#!"><i class="fab fa-twitter fa-lg me-3"></i></a>
-                                                <a href="#!"><i class="fab fa-instagram fa-lg"></i></a>
+                                            <div className="d-flex justify-content-start">
+                                                <a href="#!"><i className="fab fa-facebook-f fa-lg me-3"></i></a>
+                                                <a href="#!"><i className="fab fa-twitter fa-lg me-3"></i></a>
+                                                <a href="#!"><i className="fab fa-instagram fa-lg"></i></a>
                                             </div>
                                         </div>
                                     </div>

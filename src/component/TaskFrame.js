@@ -1,19 +1,24 @@
-import React, { useState, useContext, useEffect } from 'react';
 import { Dropdown, Collapse, initMDB } from "mdb-ui-kit";
+import React, { useState, useEffect } from 'react';
+import { Routes, Route } from 'react-router-dom';
 import "./style/task.css"
 import Task from './Task'
-import AuthContext from '../context/AuthProvider';
 import CreateTask from './CreateTask';
 import UpcomingTask from './UpcomingTask';
 import Meeting from './Meeting';
+import { useNavigate } from 'react-router-dom';
+import Layout from "./Layout";
+import UserProfile from './UserProfile';
+import UpdateTask from "./UpdateTask";
 
 
 
 
 
 const TaskFrame = () => {
-    const {currentComponent, setCurrentComponent } = useContext(AuthContext);
-    useEffect(()=>{
+    const navigate = useNavigate();
+
+    useEffect(() => {
         initMDB({ Dropdown, Collapse });
     }, [])
 
@@ -22,76 +27,65 @@ const TaskFrame = () => {
     return (
         <>
             <div className='task-manager'>
-                <div class="left-bar">
-                    <div class="left-content">
+                <div className="left-bar">
+                    <div className="left-content">
 
-                        <ul class="action-list">
-                            <li class="item item-p">
-                                <img class="feather feather-star" src="svg/star.svg" alt="" />
-                                <span onClick={() => setCurrentComponent(<CreateTask />)}>Create</span>
+                        <ul className="action-list">
+                            <li className="item item-p">
+                                <img className="feather feather-star" src="svg/star.svg" alt="" />
+                                <span onClick={() => navigate("/create-task")}>Create</span>
                             </li>
-                            <li class="item item-p">
-                                <img class="feather feather-inbox" src="../svg/inbox.svg" alt="" />
-                                <span onClick={() => setCurrentComponent(<Task />)}>Inbox</span>
+                            <li className="item item-p">
+                                <img className="feather feather-inbox" src="../svg/inbox.svg" alt="" />
+                                <span onClick={() => navigate("/all-task")}>Inbox</span>
                             </li>
-                            <li class="item item-p">
-                                <img class="feather feather-calendar" src="svg/calender.svg" alt="" />
-                                <span onClick={() => setCurrentComponent(<UpcomingTask />)}>Upcoming</span>
+                            <li className="item item-p">
+                                <img className="feather feather-calendar" src="svg/calender.svg" alt="" />
+                                <span onClick={() => navigate("/upcoming-task")}>Upcoming</span>
                             </li>
-                            <li class="item item-p">
-                                <img class="feather feather-users" src="svg/users.svg" alt="" />
+                            <li className="item item-p">
+                                <img className="feather feather-users" src="svg/users.svg" alt="" />
                                 <span onClick={() => setIsShowMeeting(!isShowMeeting)}>Meetings</span>
                             </li>
 
-                            <li class="item item-p">
-                                <img class="feather feather-hash" src="svg/hash.svg" alt="" />
-                                <span>Important</span>
-                            </li>
 
-
-                            {/* <li class="item">
-                                <img class="feather feather-trash" src="svg/trash.svg" alt="" />
-                                <span>Trash</span>
-                            </li> */}
+                            {/* <li className="item">
+                                    <img className="feather feather-trash" src="svg/trash.svg" alt="" />
+                                    <span>Trash</span>
+                                </li> */}
                         </ul>
 
-                        <ul class="category-list">
-                            <li class="item">
-                                <img class="feather feather-users" src="svg/users.svg" alt="" />
-                                <span>Family</span>
-                            </li>
-                            <li class="item">
-                                <img class="feather feather-sun" src="svg/sun.svg" alt="" />
-                                <span>Vacation</span>
-                            </li>
-                            <li class="item">
-                                <img class="feather feather-trending-up" src="svg/trending.svg" alt="" />
-                                <span>Festival</span>
-                            </li>
-                            <li class="item">
-                                <img class="feather feather-zap" src="svg/zap.svg" alt="" />
-                                <span>Concerts</span>
-                            </li>
-                        </ul>
                     </div>
 
-                    {/* <div class="upper-part">
-                        <div class="actions">
-                            <div class="circle"></div>
-                            <div class="circle-2"></div>
-                        </div>
-                    </div> */}
+                    {/* <div className="upper-part">
+                            <div className="actions">
+                                <div className="circle"></div>
+                                <div className="circle-2"></div>
+                            </div>
+                        </div> */}
                 </div>
 
+                <div className="page-content row  d-flex  align-items-center h-100">
+                    {/* Use React Router to render the content dynamically */}
+                    <Routes>
+                        <Route path='/' element={<Layout />}>
+                            <Route path="/create-task" element={<CreateTask />} />
+                            <Route path="/all-task" element={<Task/>} />
+                            <Route path="/upcoming-task" element={<UpcomingTask />} />
+                            <Route path="/user-profile" element={<UserProfile />} />
+                            <Route path="/update-task" element={<UpdateTask />} />
+                        </Route>
+                    </Routes>
 
-                {currentComponent}
+                    {/* Render Meetings component based on the state */}
+                </div>
 
 
 
                 {isShowMeeting ? <Meeting /> : ""}
 
 
-            </div>
+            </div >
         </>
     )
 }

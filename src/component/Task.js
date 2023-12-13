@@ -2,50 +2,51 @@ import React, { useState, useContext, useEffect } from 'react';
 import axios from "../api/axios"
 import AuthContext from '../context/AuthProvider';
 import AllTask from './AllTask';
-import { useNavigate } from 'react-router-dom';
 import { Dropdown, Collapse, initMDB } from "mdb-ui-kit";
+import { useLocation } from 'react-router-dom';
 
 const SHOWALL_TASK = "/task/showall"
 
 const Task = () => {
-    const { auth, isLogin } = useContext(AuthContext);
-    const loginFrom = "/login";
-    const navigate = useNavigate();
+    const { auth } = useContext(AuthContext);
 
     const [allTaskData, setAllTaskData] = useState([]);
-    const [isDeletedData, setIsDeletedData] = useState('');
+    const [isDeletedData, setIsDeletedData] = useState(false);
     const [errMsg, setErrMsg] = useState('');
+    const [dataFetched, setDataFetched] = useState(false);
 
     useEffect(() => {
         async function getAllData() {
             try {
                 initMDB({ Dropdown, Collapse });
-                const response = await axios.get(SHOWALL_TASK, {
-                    headers: { Authorization: auth.accessToken }
-                });
+                if(!dataFetched || isDeletedData) {
+                    const response = await axios.get(SHOWALL_TASK, {
+                        headers: { Authorization: auth.accessToken }
+                    });
 
-                // Set the response data in state
-                if (response?.data?.Task) {
-                    setAllTaskData(response?.data?.Task);
+                    // Set the response data in state
+                    if (response?.data?.Task) {
+                        setAllTaskData(response?.data?.Task);
+                    }
+                    else {
+                        setAllTaskData([]);
+                        setErrMsg('You have not any current task yet...');
+                    }
+
+                    setDataFetched(true);
                 }
-                else {
-                    setAllTaskData([]);
-                    setErrMsg('You have not any current task yet...');
-                }
+
             } catch (err) {
                 if (!err?.response) {
                     setErrMsg('No server response');
-                    navigate(loginFrom, { replace: true });
                 }
                 else if (err.response?.status === 400) {
                     setErrMsg('You have not any current task yet...');
                 } else if (err.response?.status === 401) {
                     setErrMsg('Unautherized');
-                    navigate(loginFrom, { replace: true });
                 }
                 else if (err.response?.status === 403) {
                     setErrMsg('User is not logged In');
-                    navigate(loginFrom, { replace: true });
                 }
                 else {
                     setErrMsg('Login failed');
@@ -55,41 +56,28 @@ const Task = () => {
             }
         }
 
-        if (!isLogin) {
-            navigate(loginFrom, { replace: true });
-        }
-        else {
-            getAllData();
-        }
-         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isDeletedData, setErrMsg])
+        getAllData();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isDeletedData])
 
     return (
         <>
 
-            <div class="page-content">
-                <div class="header">Today Tasks</div>
+            <div className="page-content">
+                <div className="header">Today Tasks</div>
 
-                <div class="content-categories">
-                    <div class="label-wrapper">
-                        <input class="nav-item" name="nav" type="radio" id="opt-1" checked />
-                        <label class="category" htmlFor="opt-1">All</label>
+                <div className="content-categories">
+                    <div className="label-wrapper">
+                        <input className="nav-item" name="nav" type="radio" id="opt-1" checked />
+                        <label className="category" htmlFor="opt-1">All</label>
                     </div>
-                    <div class="label-wrapper">
-                        <input class="nav-item" name="nav" type="radio" id="opt-2" />
-                        <label class="category" htmlFor="opt-2">Important</label>
-                    </div>
-                    <div class="label-wrapper">
-                        <input class="nav-item" name="nav" type="radio" id="opt-3" />
-                        <label class="category" htmlFor="opt-3">Notes</label>
-                    </div>
-                    <div class="label-wrapper">
-                        <input class="nav-item" name="nav" type="radio" id="opt-4" />
-                        <label class="category" htmlFor="opt-4">Links</label>
+                    <div className="label-wrapper">
+                        <input className="nav-item" name="nav" type="radio" id="opt-2" />
+                        <label className="category" htmlFor="opt-2">Completed</label>
                     </div>
                 </div>
 
-                <div class="tasks-wrapper">
+                <div className="tasks-wrapper">
                     {
                         allTaskData.length > 0 ?
                             allTaskData?.map((item) => (

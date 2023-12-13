@@ -2,21 +2,15 @@ import React, { useEffect, useState, useContext } from 'react'
 import { Dropdown, Collapse, initMDB } from "mdb-ui-kit";
 import UpcomingTaskData from './UpcomingTaskData';
 import AuthContext from '../context/AuthProvider';
-import { useNavigate } from 'react-router-dom';
 import axios from '../api/axios';
 
 
 const PENDING_TASK = "/task/pending"
 
 const UpcomingTask = () => {
-    const { auth, isLogin } = useContext(AuthContext);
+    const { auth } = useContext(AuthContext);
     const [allPendingTaskData, setAllPendigTaskData] = useState([]);
     const [errMsg, setErrMsg] = useState('');
-
-    const navigate = useNavigate();
-    const loginFrom = "/login";
-
-
 
     useEffect(() => {
         async function getPendingData() {
@@ -28,51 +22,41 @@ const UpcomingTask = () => {
                 });
 
                 // Set the response data in state
-                if(response.data?.pendingTask.length){
+                if (response.data?.pendingTask.length) {
                     setAllPendigTaskData(response.data?.pendingTask);
                 }
-                else{
+                else {
                     setErrMsg("You have no any upcoming task yet...");
                 }
             } catch (err) {
                 if (!err?.response) {
                     setErrMsg('No server response');
-                    navigate(loginFrom, { replace: true });
                 }
                 else if (err.response?.status === 400) {
                     setErrMsg('You have no any upcoming task yet...');
                 } else if (err.response?.status === 401) {
                     setErrMsg('Unautherized');
-                    navigate(loginFrom, { replace: true });
                 }
                 else if (err.response?.status === 403) {
                     setErrMsg('User is not logged In');
-                    navigate(loginFrom, { replace: true });
                 }
                 else {
                     setErrMsg('Login failed');
-                    navigate(loginFrom, { replace: true });
                 }
 
                 // errRef.current.focus();
             }
         }
 
+        getPendingData();
 
-        if (!isLogin) {
-            navigate(loginFrom, { replace: true });
-        }
-        else {
-            getPendingData();
-        }
-         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     return (
         <>
-            <div class="page-content">
-                <div class="header upcoming">Upcoming Tasks</div>
-                <div class="tasks-wrapper">
+            <div className="page-content">
+                <div className="header upcoming">Upcoming Tasks</div>
+                <div className="tasks-wrapper">
                     {allPendingTaskData.length > 0 ?
                         allPendingTaskData.map((item) => (
                             <UpcomingTaskData

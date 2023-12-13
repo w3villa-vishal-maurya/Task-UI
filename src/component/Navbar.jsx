@@ -1,20 +1,21 @@
-import React, {useContext, useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Dropdown, Collapse, initMDB } from "mdb-ui-kit";
 import AuthContext from '../context/AuthProvider';
-import UserProfile from './UserProfile';
+import { useNavigate } from 'react-router-dom';
+
 
 const Navbar = () => {
-    const { setCurrentComponent } = useContext(AuthContext);
     const { isLogin, setIsLogin } = useContext(AuthContext);
 
     useEffect(() => {
         initMDB({ Dropdown, Collapse })
     }, []);
 
+    const navigate = useNavigate();
 
 
     const handleLogoutReq = async () => {
-        localStorage.setItem(
+        sessionStorage.setItem(
             "email",
             JSON.stringify({ "email": null, password: null, "accessToken": null })
         );
@@ -26,22 +27,22 @@ const Navbar = () => {
 
     return (
         <>
-            <nav class="navbar navbar-expand-lg nav-bg-color ">
-                <div class="container-fluid ">
+            <nav className="navbar navbar-expand-lg nav-bg-color ">
+                <div className="container-fluid ">
                     <button
                         data-mdb-collapse-init
-                        class="navbar-toggler"
+                        className="navbar-toggler"
                         type="button"
                         data-mdb-target="#navbarSupportedContent"
                         aria-controls="navbarSupportedContent"
                         aria-expanded="false"
                         aria-label="Toggle navigation"
                     >
-                        <i class="fas fa-bars"></i>
+                        <i className="fas fa-bars"></i>
                     </button>
 
-                    <div class="collapse navbar-collapse " id="navbarSupportedContent" >
-                        <a class="navbar-brand mt-2 mt-lg-0" href="/">
+                    <div className="collapse navbar-collapse " id="navbarSupportedContent" >
+                        <a className="navbar-brand mt-2 mt-lg-0" href="/">
                             {/* <img
                                 src="https://mdbcdn.b-cdn.net/img/logo/mdb-transaprent-noshadows.webp"
                                 height="15"
@@ -50,22 +51,22 @@ const Navbar = () => {
                             /> */}
                             Task Management
                         </a>
-                        {/* <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                            <li class="nav-item">
-                                <a class="nav-link" href="/login">Login</a>
+                        {/* <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+                            <li className="nav-item">
+                                <a className="nav-link" href="/login">Login</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="/register">Register</a>
+                            <li className="nav-item">
+                                <a className="nav-link" href="/register">Register</a>
                             </li>
                         </ul> */}
                     </div>
 
                     {!isLogin ?
-                        <div class="d-flex align-items-center">
-                            <a class="link-secondary me-3" href="/login">
+                        <div className="d-flex align-items-center">
+                            <a className="link-secondary me-3" href="/login">
                                 <img
                                     src="images/img10.jpg"
-                                    class="rounded-circle"
+                                    className="rounded-circle"
                                     height="25"
                                     alt="Black and White Portrait of a Man"
                                     loading="lazy"
@@ -74,39 +75,36 @@ const Navbar = () => {
                         </div>
                         :
 
-                        <div class="d-flex align-items-center">
-                            {/* <a class="link-secondary me-3" href="#">
-                                <i class="fas fa-shopping-cart"></i>
+                        <div className="d-flex align-items-center">
+                            {/* <a className="link-secondary me-3" href="#">
+                                <i className="fas fa-shopping-cart"></i>
                             </a> */}
 
-                            <div class="dropdown">
+                            <div className="dropdown">
                                 <div
                                     data-mdb-dropdown-init
-                                    class="dropdown-toggle d-flex align-items-center hidden-arrow"
+                                    className="dropdown-toggle d-flex align-items-center hidden-arrow"
                                     id="navbarDropdownMenuAvatar"
                                     role="button"
                                     aria-expanded="false"
                                 >
                                     <img
                                         src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp"
-                                        class="rounded-circle"
+                                        className="rounded-circle"
                                         height="25"
                                         alt="Black and White Portrait of a Man"
                                         loading="lazy"
                                     />
                                 </div>
                                 <ul
-                                    class="dropdown-menu dropdown-menu-end"
+                                    className="dropdown-menu dropdown-menu-end"
                                     aria-labelledby="navbarDropdownMenuAvatar"
                                 >
                                     <li>
-                                        <div class="dropdown-item" onClick={() => setCurrentComponent(<UserProfile />)}>My profile</div>
+                                        <div className="dropdown-item" onClick={() => navigate("/user-profile")}>My profile</div>
                                     </li>
                                     <li>
-                                        <div class="dropdown-item" >Settings</div>
-                                    </li>
-                                    <li>
-                                        <div class="dropdown-item" onClick={handleLogoutReq}>Logout</div>
+                                        <div className="dropdown-item" onClick={handleLogoutReq}>Logout</div>
                                     </li>
                                 </ul>
                             </div>

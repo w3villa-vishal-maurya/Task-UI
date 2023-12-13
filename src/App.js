@@ -3,11 +3,11 @@ import "./component/style/general.css"
 import Navbar from './component/Navbar'
 import Login from './component/Login'
 import Registration from './component/Registration'
-import { Routes, Route} from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import TaskFrame from './component/TaskFrame';
-import Layout from './component/Layout';
 import RequireAuth from './component/RequireAuth';
-import CreateTask from './component/CreateTask';
+import ForgetPassword from './component/ForgetPassword'
+import ResetPassword from './component/ResetPassword'
 
 
 
@@ -17,19 +17,19 @@ const App = () => {
     <>
       <Navbar />
       <Routes>
-        <Route path='/' element={<Layout />}>
 
-          {/* {Public Routes} */}
-          <Route path="/" element={<TaskFrame/>} />
-          <Route path="/register" element={<Registration />} />
-          <Route path="/login" element={<Login />} />
+        {/* {Public Routes} */}
+        <Route path="/register" element={<Registration />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/forget-password" element={<ForgetPassword />} />
+        <Route path="/reset-password/*" element={<ResetPassword />} />
 
-          {/* {Private Routes} */}
-          <Route element={<RequireAuth />}>
-            <Route path="/createtask" element={<CreateTask />} />
-          </Route>
-
+        {/* {Private Routes} */}
+        <Route element={<RequireAuth />}>
+          <Route path="*" element={<TaskFrame />} />
         </Route>
+
+
 
       </Routes>
     </>

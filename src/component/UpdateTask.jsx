@@ -1,25 +1,29 @@
 import AuthContext from '../context/AuthProvider';
 import axios from '../api/axios';
 import React, { useState, useContext, useRef } from 'react';
-import Task from './Task';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 
-const UpdateTask = (props) => {
+const UpdateTask = () => {
     const errRef = useRef();
     const descriptionRef = useRef();
     const completedRef = useRef();
 
-    const { auth, setCurrentComponent } = useContext(AuthContext);
+    const navigate = useNavigate();
+    const location = useLocation();
+    const task = location.state?.task;
+
+
+    const { auth} = useContext(AuthContext);
     const [errMsg, setErrMsg] = useState('');
-    const [description, setDescription] = useState(props.task?.description);
-    const [completed, setCompleted] = useState(props.task?.completed);
+    const [description, setDescription] = useState(task?.description);
+    const [completed, setCompleted] = useState(task?.completed);
 
-
-
+    
     const handleSubmit = async (e) => {
         try {
             e.preventDefault();
-            const UPDATE_TASK = `/task/${props.task?.taskId}`;
+            const UPDATE_TASK = `/task/${task?.taskId}`;
 
             await axios.put(UPDATE_TASK, {
                 "description": description,
@@ -32,7 +36,7 @@ const UpdateTask = (props) => {
 
             alert("Task has been Updated!!");
             // navigate(from, { replace: true });
-            setCurrentComponent(<Task />)
+            navigate("/all-task")
         } catch (err) {
             if (!err?.response) {
                 setErrMsg('No server response');
@@ -73,7 +77,7 @@ const UpdateTask = (props) => {
                                 name="task"
                                 ref={descriptionRef}
                                 onChange={(e) => setDescription(e.target.value)}
-                                defaultValue={props.task?.description}
+                                defaultValue={task?.description}
                                 value={description}
                             />
                         </div>
@@ -82,7 +86,7 @@ const UpdateTask = (props) => {
                             <input
                                 id="html"
                                 type="checkbox"
-                                defaultChecked={props.task?.completed}
+                                defaultChecked={task?.completed}
                                 ref={completedRef}
                                 onChange={(e) => setCompleted(e.target.checked)}
                                 value={completed}

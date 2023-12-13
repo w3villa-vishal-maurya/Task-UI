@@ -4,7 +4,7 @@ const AuthContext = createContext({});
 
 export const AuthProvider = ({ children }) => {
     let [auth, setAuth] = useState({});
-     auth = JSON.parse(localStorage.getItem("email"))
+     auth = JSON.parse(sessionStorage.getItem("email"))
 
      const [currentComponent, setCurrentComponent] = useState()
      const [isLogin, setIsLogin] = useState(auth?.email ? true : false);
