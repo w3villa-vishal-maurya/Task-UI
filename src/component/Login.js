@@ -2,12 +2,16 @@ import React, { useState, useEffect, useRef } from 'react';
 import useAuth from './hooks/useAuth';
 import axios from "../api/axios"
 import { useNavigate, useLocation } from 'react-router-dom';
+import Cookies from 'universal-cookie';
+import { jwtDecode } from "jwt-decode";
 
 const LOGIN_URL = "/login"
 
 function Login() {
     const emailRef = useRef();
     const { setAuth, setIsLogin } = useAuth();
+
+    const cookies = new Cookies();
 
     const navigate = useNavigate();
     const location = useLocation();
@@ -51,11 +55,17 @@ function Login() {
             setIsLogin(true);
 
             // Store email and accesstoken to localstorage
-            sessionStorage.setItem(
-                "email",
-                JSON.stringify({ "email": formData.email, password: formData.password, "accessToken": accessToken })
-            );
+            // sessionStorage.setItem(
+            //     "email",
+            //     JSON.stringify({ "email": formData.email, password: formData.password, "accessToken": accessToken })
+            // );
 
+            const decode = jwtDecode(accessToken);
+            console.log(decode);
+
+            cookies.set("email", JSON.stringify({ "email": formData.email, password: formData.password, "accessToken": accessToken }),
+                { expires: new Date(decode.exp * 1000) },
+            )
             navigate(from, { replace: true });
         } catch (err) {
             if (!err?.response) {

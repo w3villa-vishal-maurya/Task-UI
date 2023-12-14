@@ -2,10 +2,12 @@ import React, { useContext, useEffect } from 'react';
 import { Dropdown, Collapse, initMDB } from "mdb-ui-kit";
 import AuthContext from '../context/AuthProvider';
 import { useNavigate } from 'react-router-dom';
+import Cookies from "universal-cookie";
 
 
 const Navbar = () => {
     const { isLogin, setIsLogin } = useContext(AuthContext);
+    const cookies = new Cookies();
 
     useEffect(() => {
         initMDB({ Dropdown, Collapse })
@@ -15,10 +17,12 @@ const Navbar = () => {
 
 
     const handleLogoutReq = async () => {
-        sessionStorage.setItem(
-            "email",
-            JSON.stringify({ "email": null, password: null, "accessToken": null })
-        );
+        // sessionStorage.setItem(
+        //     "email",
+        //     JSON.stringify({ "email": null, password: null, "accessToken": null })
+        // );
+
+        cookies.remove("email");
 
         alert("You have been logged out!!!");
         setIsLogin(false);
