@@ -10,6 +10,7 @@ import { useNavigate } from 'react-router-dom';
 import Layout from "./Layout";
 import UserProfile from './UserProfile';
 import UpdateTask from "./UpdateTask";
+import ErrorPage from "./ErrorPage";
 
 
 
@@ -71,9 +72,10 @@ const TaskFrame = () => {
                         <Route path='/' element={<Layout />}>
                             <Route path="/create-task" element={<CreateTask />} />
                             <Route path="/all-task" element={<Task/>} />
-                            <Route path="/upcoming-task" element={<UpcomingTask />} />
+                            <Route path="/upcoming-task" element={<UpcomingTask />} errorElement={<ErrorPage />}/>
                             <Route path="/user-profile" element={<UserProfile />} />
-                            <Route path="/update-task" element={<UpdateTask />} />
+                            <Route path="/update-task/:token" element={<UpdateTask />} />
+                            <Route path="/*"  element={<ErrorPage />} />
                         </Route>
                     </Routes>
 

@@ -20,7 +20,12 @@ const AllTask = (props) => {
         }
 
         // setCurrentComponent(<UpdateTask task={task} />)
-        navigate(`${"/update-task"}#${props.taskId}`, { state: { task } });
+        if(props.taskId){
+            navigate(`${"/update-task"}/${props.taskId}`, { state: { task } });
+        }
+        else{
+            alert("Task id not found!");
+        }
     };
 
 

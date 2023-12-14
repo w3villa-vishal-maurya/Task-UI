@@ -66,7 +66,8 @@ function Login() {
             cookies.set("email", JSON.stringify({ "email": formData.email, password: formData.password, "accessToken": accessToken }),
                 { expires: new Date(decode.exp * 1000) },
             )
-            navigate(from, { replace: true });
+            // navigate(from, { replace: true });
+            navigate('/all-task')
         } catch (err) {
             if (!err?.response) {
                 // setErrMsg('No server response');
