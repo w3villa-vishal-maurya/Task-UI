@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom';
 import axios from '../api/axios';
+import { Dropdown, Collapse, initMDB } from "mdb-ui-kit";
 
 
 const ResetPassword = () => {
@@ -19,9 +20,10 @@ const ResetPassword = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
+            initMDB({ Dropdown, Collapse });
             const path = location?.pathname;
             const token = path.split("/")[2];
-            const RESET_PASSWORD = `/reset-password/${token}`;
+            const RESET_PASSWORD = `/reset-password/git ${token}`;
 
             const response = await axios.post(RESET_PASSWORD, { "password": password });
 

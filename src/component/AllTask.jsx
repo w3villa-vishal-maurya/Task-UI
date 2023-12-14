@@ -20,7 +20,7 @@ const AllTask = (props) => {
         }
 
         // setCurrentComponent(<UpdateTask task={task} />)
-        navigate("/update-task", { state: { task } });
+        navigate(`${"/update-task"}#${props.taskId}`, { state: { task } });
     };
 
 
