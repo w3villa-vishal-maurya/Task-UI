@@ -35,6 +35,7 @@ const ForgetPassword = () => {
             }
 
             // errRef.current.focus();
+            alert(errMsg);
         }
     }
 
@@ -48,7 +49,7 @@ const ForgetPassword = () => {
                             <div className="card shadow-2-strong style-2">
                                 <form className="card-body p-5 text-center" onSubmit={handleSubmit}>
 
-                                    <h3 className="mb-5"></h3>
+                                    <h3 className="mb-5">Forget Password</h3>
 
                                     <div className="form-outline mb-4">
 

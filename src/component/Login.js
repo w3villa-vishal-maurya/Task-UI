@@ -126,11 +126,6 @@ function Login() {
                                 </div>
 
 
-                                <div className="form-check d-flex justify-content-start mb-4">
-                                    <input className="form-check-input" type="checkbox" value="" id="form1Example3" />
-                                    <label className="form-check-label" for="form1Example3"> Remember password </label>
-                                </div>
-
                                 <button className="btn btn-primary btn-lg btn-block" type="submit" >Login</button>
 
                                 {/* <hr className="my-4" />
