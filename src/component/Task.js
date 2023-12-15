@@ -64,7 +64,7 @@ const Task = () => {
         <>
 
             <div className="page-content">
-                <div className="header">Today Tasks</div>
+                <div className="header">All Tasks</div>
 
                 <div className="content-categories">
                     <div className="label-wrapper">
