@@ -23,7 +23,7 @@ const ResetPassword = () => {
             initMDB({ Dropdown, Collapse });
             const path = location?.pathname;
             const token = path.split("/")[2];
-            const RESET_PASSWORD = `/reset-password/git ${token}`;
+            const RESET_PASSWORD = `/reset-password/${token}`;
 
             const response = await axios.post(RESET_PASSWORD, { "password": password });
 
