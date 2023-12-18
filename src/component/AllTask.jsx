@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 
 
 const AllTask = (props) => {
-    const { auth} = useContext(AuthContext);
+    const { auth } = useContext(AuthContext);
     const [errMsg, setErrMsg] = useState('');
 
     const navigate = useNavigate();
@@ -20,10 +20,10 @@ const AllTask = (props) => {
         }
 
         // setCurrentComponent(<UpdateTask task={task} />)
-        if(props.taskId){
+        if (props.taskId) {
             navigate(`${"/update-task"}/${props.taskId}`, { state: { task } });
         }
-        else{
+        else {
             alert("Task id not found!");
         }
     };
@@ -65,9 +65,15 @@ const AllTask = (props) => {
         }
     }
 
+    const handleDeleteRequest = () => {
+        if (window.confirm("Are you sure to delete the task!!!") === true) {
+            handleDeleteTask();
+        }
+    }
+
     return (
         <>
-            { errMsg ? <p>{errMsg}</p> : ''}
+            {errMsg ? <p>{errMsg}</p> : ''}
             <div className="task">
                 <input
                     className="task-item"
@@ -80,7 +86,7 @@ const AllTask = (props) => {
                 </label>
                 <span id={props?.taskId}>
                     <span className="tag" onClick={handleUpdateTask}><img className="feather feather-edit" src="svg/edit.svg" alt="" /></span>
-                    <span className="tag tag-delete" onClick={handleDeleteTask}> <img className="feather feather-trash delete" src="svg/trash.svg" alt="" /></span>
+                    <span className="tag tag-delete" onClick={handleDeleteRequest}> <img className="feather feather-trash delete" src="svg/trash.svg" alt="" /></span>
                 </span>
             </div>
         </>

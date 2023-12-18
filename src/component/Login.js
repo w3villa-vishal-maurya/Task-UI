@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import useAuth from './hooks/useAuth';
 import axios from "../api/axios"
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate} from 'react-router-dom';
 import Cookies from 'universal-cookie';
 import { jwtDecode } from "jwt-decode";
 
@@ -14,14 +14,13 @@ function Login() {
     const cookies = new Cookies();
 
     const navigate = useNavigate();
-    const location = useLocation();
 
     const [formData, setFormData] = useState({
         email: '',
         password: '',
     });
 
-    const from = location.state?.from?.pathname || "/";
+    // const from = location.state?.from?.pathname || "/";
 
     useEffect(() => {
         emailRef.current.focus();

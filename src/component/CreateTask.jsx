@@ -17,7 +17,7 @@ const CreateTask = () => {
     const [errMsg, setErrMsg] = useState('');
 
     const navigate = useNavigate();
-    const from = "/";
+    const from = "/all-task";
 
     useEffect(() => {
         initMDB({ Dropdown, Collapse });

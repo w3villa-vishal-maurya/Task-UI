@@ -1,7 +1,10 @@
 import AuthContext from '../context/AuthProvider';
+import { Dropdown, Collapse, initMDB } from "mdb-ui-kit";
 import axios from '../api/axios';
-import React, { useState, useContext, useRef } from 'react';
+import React, { useState, useContext, useRef, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+
+
 
 
 const UpdateTask = () => {
@@ -9,24 +12,71 @@ const UpdateTask = () => {
     const descriptionRef = useRef();
     const completedRef = useRef();
 
+
     const navigate = useNavigate();
     const location = useLocation();
-    const task = location.state?.task;
-
-
-    const { auth} = useContext(AuthContext);
+    const from = "/all-task";
+    const { auth } = useContext(AuthContext);
     const [errMsg, setErrMsg] = useState('');
-    const [description, setDescription] = useState(task?.description);
-    const [completed, setCompleted] = useState(task?.completed);
+    const [task, setTask] = useState();
+    const [completed, setCompleted] = useState(false);
 
-    
+    // const task = location.state?.task;
+
+    const path = location.pathname.split('/');
+    const taskId = path[2];
+
+
+    useEffect(() => {
+        initMDB({ Dropdown, Collapse });
+
+        async function getTaskWithId() {
+            try {
+
+                const TASK_WITH_ID = `/task/${taskId}`;
+
+                const response = await axios.get(TASK_WITH_ID,
+                    {
+                        headers: { Authorization: auth.accessToken }
+                    }
+                );
+                
+                setTask(response?.data?.Task[0]?.description);
+                setCompleted(response?.data?.Task[0]?.completed)
+            }
+            catch (err) {
+                if (!err?.response) {
+                    setErrMsg('No server response');
+                }
+                else if (err.response?.status === 400) {
+                    setErrMsg('Task not found....');
+                    navigate(from, { replace: true });
+                } else if (err.response?.status === 401) {
+                    setErrMsg('Unautherized');
+                }
+                else {
+                    setErrMsg('You are not login, Login first...');
+                }
+            }
+
+        }
+
+        getTaskWithId()
+          // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
+
+
+
+
+
+
     const handleSubmit = async (e) => {
         try {
             e.preventDefault();
-            const UPDATE_TASK = `/task/${task?.taskId}`;
+            const UPDATE_TASK = `/task/${taskId}`;
 
             await axios.put(UPDATE_TASK, {
-                "description": description,
+                "description": task,
                 "completed": completed
             },
                 {
@@ -42,7 +92,7 @@ const UpdateTask = () => {
                 setErrMsg('No server response');
             }
             else if (err.response?.status === 400) {
-                setErrMsg('Missing Username or Password');
+                setErrMsg('Updated task not submitted!!');
             } else if (err.response?.status === 401) {
                 setErrMsg('Unautherized');
             }
@@ -76,9 +126,9 @@ const UpdateTask = () => {
                                 type="text"
                                 name="task"
                                 ref={descriptionRef}
-                                onChange={(e) => setDescription(e.target.value)}
-                                defaultValue={task?.description}
-                                value={description}
+                                onChange={(e) => setTask(e.target.value)}
+                                // defaultValue={task?.description}
+                                value={task}
                             />
                         </div>
 
@@ -86,7 +136,8 @@ const UpdateTask = () => {
                             <input
                                 id="html"
                                 type="checkbox"
-                                defaultChecked={task?.completed}
+                                // defaultChecked={completed}
+                                checked={completed}
                                 ref={completedRef}
                                 onChange={(e) => setCompleted(e.target.checked)}
                                 value={completed}
