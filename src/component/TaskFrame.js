@@ -5,12 +5,13 @@ import "./style/task.css"
 import Task from './Task'
 import CreateTask from './CreateTask';
 import UpcomingTask from './UpcomingTask';
-import Meeting from './Meeting';
+import Meeting from './AllProjects';
 import { useNavigate } from 'react-router-dom';
 import Layout from "./Layout";
 import UserProfile from './UserProfile';
 import UpdateTask from "./UpdateTask";
 import ErrorPage from "./ErrorPage";
+import ProjectDashboard from "./ProjectDashboard";
 
 
 
@@ -46,7 +47,7 @@ const TaskFrame = () => {
                             </li>
                             <li className="item item-p">
                                 <img className="feather feather-users" src="svg/users.svg" alt="" />
-                                <span onClick={() => setIsShowMeeting(!isShowMeeting)}>Meetings</span>
+                                <span onClick={() => navigate("/projects")}>Projects</span>
                             </li>
 
 
@@ -71,22 +72,18 @@ const TaskFrame = () => {
                     <Routes>
                         <Route path='/' element={<Layout />}>
                             <Route path="/create-task" element={<CreateTask />} />
-                            <Route path="/all-task" element={<Task/>} />
-                            <Route path="/upcoming-task" element={<UpcomingTask />} errorElement={<ErrorPage />}/>
+                            <Route path="/all-task" element={<Task />} />
+                            <Route path="/upcoming-task" element={<UpcomingTask />} errorElement={<ErrorPage />} />
                             <Route path="/user-profile" element={<UserProfile />} />
                             <Route path="/update-task/:token" element={<UpdateTask />} />
-                            <Route path="/*"  element={<ErrorPage />} />
+                            <Route path="/projects" element={<Meeting />} />
+                            <Route path="/projects/:id" element={<ProjectDashboard />} />
+                            <Route path="/*" element={<ErrorPage />} />
                         </Route>
                     </Routes>
 
                     {/* Render Meetings component based on the state */}
                 </div>
-
-
-
-                {isShowMeeting ? <Meeting /> : ""}
-
-
             </div >
         </>
     )
