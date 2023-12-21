@@ -520,9 +520,6 @@
     font-weight: 700;
 }
 
-.mode-switch.active .moon {
-    fill: var(--main-color);
-}
 
 .messages-btn {
     border-radius: 4px 0 0 4px;

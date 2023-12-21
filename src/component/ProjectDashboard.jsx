@@ -1,21 +1,80 @@
-import React from 'react'
+import React, { useState, useContext, useEffect } from 'react';
+import AuthContext from '../context/AuthProvider';
+import axios from '../api/axios';
+import { useLocation, useNavigate } from 'react-router-dom';
 import "./style/projectDashboard.css";
 
 const ProjectDashboard = () => {
+    const { auth } = useContext(AuthContext);
+    // const navigate = useNavigate();
+    const [project, setProject] = useState({});
+    const [errMsg, setErrMsg] = useState('');
+    const [projectTask, setProjectTask] = useState([]);
+    let [projectUser, setProjectUser] = useState([]);
 
+    const location = useLocation();
+    const navigate = useNavigate();
+
+
+    const path = location.pathname.split('/');
+    const projectId = path[2];
+
+    useEffect(() => {
+        async function getProjectWithId() {
+            try {
+                console.log({ "hello me": auth });
+                const PROJECT_WITH_ID = `/project/${projectId}`;
+
+                const response = await axios.get(PROJECT_WITH_ID,
+                    {
+                        headers: { Authorization: auth.accessToken }
+                    }
+                );
+
+
+                setProject(response?.data?.project);
+
+                response?.data?.projectTask.length ? setProjectTask(response?.data?.projectTask) : setErrMsg("Not any task created yet!");
+
+                response?.data?.projectUser.length ? setProjectUser(response?.data?.projectUser) : setErrMsg("Not any user listed yet!");
+            }
+            catch (err) {
+                if (!err?.response) {
+                    setErrMsg('No server response');
+                }
+                else if (err.response?.status === 400) {
+                    setErrMsg('Task not found....');
+                    // navigate(from, { replace: true });
+                } else if (err.response?.status === 401) {
+                    setErrMsg('Unautherized');
+                }
+                else {
+                    setErrMsg('You are not login, Login first...');
+                }
+            }
+
+        }
+
+        getProjectWithId()
+
+
+
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
 
     return (
         <div className='project-dashboard'>
             <div class="head-title">
                 <div class="left">
-                    <h1>Dashboard</h1>
+                    <h1>{project?.projectName}</h1>
                     <ul class="breadcrumb">
                         <li>
-                            <a href="#">Dashboard</a>
+                            <div>{project?.projectName}</div>
                         </li>
                         <li><i class='bx bx-chevron-right'></i></li>
                         <li>
-                            <a class="active" href="#">Home</a>
+                            <a class="active" href={`${"/projects"}`}>Back</a>
                         </li>
                     </ul>
                 </div>
@@ -29,14 +88,14 @@ const ProjectDashboard = () => {
                 <li>
                     <i class='bx bxs-calendar-check'></i>
                     <span class="text">
-                        <h3>1020</h3>
+                        <h3>{projectTask?.length}</h3>
                         <p>Total Task</p>
                     </span>
                 </li>
                 <li>
                     <i class='bx bxs-group'></i>
                     <span class="text">
-                        <h3>2834</h3>
+                        <h3>{project?.users?.length}</h3>
                         <p>Users</p>
                     </span>
                 </li>
@@ -66,46 +125,22 @@ const ProjectDashboard = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>
-                                    <img src="img/people.png" />
-                                    <p>John Doe</p>
-                                </td>
-                                <td>01-10-2021</td>
-                                <td><span class="status completed">Completed</span></td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <img src="img/people.png" />
-                                    <p>John Doe</p>
-                                </td>
-                                <td>01-10-2021</td>
-                                <td><span class="status pending">Pending</span></td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <img src="img/people.png" />
-                                    <p>John Doe</p>
-                                </td>
-                                <td>01-10-2021</td>
-                                <td><span class="status process">Process</span></td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <img src="img/people.png" />
-                                    <p>John Doe</p>
-                                </td>
-                                <td>01-10-2021</td>
-                                <td><span class="status pending">Pending</span></td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <img src="img/people.png" />
-                                    <p>John Doe</p>
-                                </td>
-                                <td>01-10-2021</td>
-                                <td><span class="status completed">Completed</span></td>
-                            </tr>
+                            {projectTask.length > 0 ?
+                                projectTask.map((item) => (
+                                    <tr id={item?._id}>
+                                        <td>
+                                            <img src="img/people.png" />
+                                            <p>{item?.description}</p>
+                                        </td>
+                                        <td>{new Date(item?.createdAt).toLocaleDateString()}</td>
+                                        <td><span class={item?.completed ? "status completed" : "status pending"}>{item?.completed ? "completed" : "pending"}</span></td>
+                                    </tr>
+                                ))
+                                :
+                                <div>{setErrMsg}</div>
+                            }
+
+
                         </tbody>
                     </table>
                 </div>
@@ -116,26 +151,32 @@ const ProjectDashboard = () => {
                         <i class='bx bx-filter'></i>
                     </div>
                     <ul class="todo-list">
-                        <li class="completed">
-                            <p>Todo List</p>
-                            <i class='bx bx-dots-vertical-rounded'></i>
-                        </li>
-                        <li class="completed">
-                            <p>Todo List</p>
-                            <i class='bx bx-dots-vertical-rounded'></i>
-                        </li>
-                        <li class="not-completed">
-                            <p>Todo List</p>
-                            <i class='bx bx-dots-vertical-rounded'></i>
-                        </li>
-                        <li class="completed">
-                            <p>Todo List</p>
-                            <i class='bx bx-dots-vertical-rounded'></i>
-                        </li>
-                        <li class="not-completed">
-                            <p>Todo List</p>
-                            <i class='bx bx-dots-vertical-rounded'></i>
-                        </li>
+
+                        {projectUser.length ?
+                            projectUser
+                                .filter((user) => user?._id === auth?.user_id)
+                                .map((user) => (
+                                    <li class="completed auth_user" id={user?._id}>
+                                        <p>{user?.name}</p>
+                                        <i class='bx bx-dots-vertical-rounded'></i>
+                                    </li>
+                                ))
+                            :
+                            <div>{setErrMsg}</div>
+                        }
+                        {projectUser.length ?
+                            projectUser
+                                .filter((user) => user?._id !== auth?.user_id)
+                                .map((user) => (
+                                    <li class="completed" id={user?._id}>
+                                        <p>{user?.name}</p>
+                                        <i class='bx bx-dots-vertical-rounded'></i>
+                                    </li>
+                                ))
+                            :
+                            <div>{setErrMsg}</div>
+                        }
+
                     </ul>
                 </div>
             </div>

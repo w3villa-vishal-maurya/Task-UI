@@ -60,9 +60,9 @@ function Login() {
             // );
 
             const decode = jwtDecode(accessToken);
-            console.log(decode);
+           
 
-            cookies.set("email", JSON.stringify({ "email": formData.email, password: formData.password, "accessToken": accessToken }),
+            cookies.set("email", JSON.stringify({ "email": formData.email, password: formData.password, "accessToken": accessToken, user_id: decode?._id }),
                 { expires: new Date(decode.exp * 1000) },
             )
             // navigate(from, { replace: true });
