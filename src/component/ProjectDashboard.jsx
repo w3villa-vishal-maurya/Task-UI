@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react';
 import AuthContext from '../context/AuthProvider';
 import axios from '../api/axios';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import "./style/projectDashboard.css";
 
 const ProjectDashboard = () => {
@@ -13,7 +13,7 @@ const ProjectDashboard = () => {
     let [projectUser, setProjectUser] = useState([]);
 
     const location = useLocation();
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
 
 
     const path = location.pathname.split('/');
@@ -78,10 +78,10 @@ const ProjectDashboard = () => {
                         </li>
                     </ul>
                 </div>
-                <a href="#" class="btn-download">
+                {/* <a href="#" class="btn-download">
                     <i class='bx bxs-cloud-download'></i>
                     <span class="text">Download PDF</span>
-                </a>
+                </a> */}
             </div>
 
             <ul class="box-info">
@@ -129,7 +129,7 @@ const ProjectDashboard = () => {
                                 projectTask.map((item) => (
                                     <tr id={item?._id}>
                                         <td>
-                                            <img src="img/people.png" />
+                                            {/* <img src="img/people.png" /> */}
                                             <p>{item?.description}</p>
                                         </td>
                                         <td>{new Date(item?.createdAt).toLocaleDateString()}</td>
@@ -137,7 +137,14 @@ const ProjectDashboard = () => {
                                     </tr>
                                 ))
                                 :
-                                <div>{setErrMsg}</div>
+                                <tr>
+                                    <td>
+                                        <p>{errMsg}</p>
+                                    </td>
+                                    {/* <td>{new Date(item?.createdAt).toLocaleDateString()}</td>
+                                    <td><span class={item?.completed ? "status completed" : "status pending"}>{item?.completed ? "completed" : "pending"}</span></td> */}
+                                </tr>
+
                             }
 
 
@@ -151,6 +158,7 @@ const ProjectDashboard = () => {
                         <i class='bx bx-filter'></i>
                     </div>
                     <ul class="todo-list">
+                        {console.log(projectUser)}
 
                         {projectUser.length ?
                             projectUser
@@ -162,7 +170,11 @@ const ProjectDashboard = () => {
                                     </li>
                                 ))
                             :
-                            <div>{setErrMsg}</div>
+                            <li class="completed">
+                                <p>{setErrMsg}</p>
+                                <i class='bx bx-dots-vertical-rounded'></i>
+                            </li>
+
                         }
                         {projectUser.length ?
                             projectUser
@@ -174,7 +186,7 @@ const ProjectDashboard = () => {
                                     </li>
                                 ))
                             :
-                            <div>{setErrMsg}</div>
+                            <div>{errMsg}</div>
                         }
 
                     </ul>
