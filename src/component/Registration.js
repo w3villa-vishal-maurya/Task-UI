@@ -7,6 +7,9 @@ const REGISTER_URL = "/register"
 
 const Registration = () => {
     const nameRef = useRef();
+    const isAdminLoginRef = useRef();
+    const [isAdminLogin, setIsAdminLogin] = useState(false);
+    const [role, setRole] = useState("user");
 
     const [formData, setFormData] = useState({
         name: '',
@@ -15,13 +18,18 @@ const Registration = () => {
         phoneNumber: ''
     });
 
+    useEffect(() => {
+        if (isAdminLogin) {
+            setRole("admin");
+        }
+    }, [isAdminLogin]);
+
 
     const [errMsg, setErrMsg] = useState('');
 
     useEffect(() => {
         if (errMsg) {
             alert(errMsg);
-            window.location.reload();
         }
     }, [errMsg]);
 
@@ -49,9 +57,9 @@ const Registration = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post(REGISTER_URL, formData);
+            const response = await axios.post(REGISTER_URL, { ...formData, role: role });
             // Set the response data in state
-            if (response.status === 200) {
+            if (response.status === 201) {
                 alert("You are registerd successfully!!")
                 navigate(from, { replace: true })// Set the success message in state
             }
@@ -159,6 +167,23 @@ const Registration = () => {
                                                     onChange={handleInputChange}
                                                     required
                                                 />
+                                            </div>
+
+                                            <div class="form-outline mb-4">
+                                                <input
+                                                    type="checkbox"
+                                                    class="form-check-input"
+                                                    id="exampleCheck1"
+                                                    checked={isAdminLogin}
+                                                    ref={isAdminLoginRef}
+                                                    onChange={(e) => setIsAdminLogin(e.target.checked ? true : false)}
+                                                    value={isAdminLogin}
+                                                />
+                                                <label
+                                                    class="form-check-label"
+                                                    for="exampleCheck1">
+                                                    &ensp;Register as a admin
+                                                </label>
                                             </div>
 
                                             {/* <div class="form-check d-flex justify-content-center mb-5">

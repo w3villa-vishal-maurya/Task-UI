@@ -62,7 +62,7 @@ function Login() {
             const decode = jwtDecode(accessToken);
            
 
-            cookies.set("email", JSON.stringify({ "email": formData.email, password: formData.password, "accessToken": accessToken, user_id: decode?._id }),
+            cookies.set("email", JSON.stringify({ "email": formData.email, password: formData.password, "accessToken": accessToken, user_id: decode?._id, role: decode.role}),
                 { expires: new Date(decode.exp * 1000) },
             )
             // navigate(from, { replace: true });

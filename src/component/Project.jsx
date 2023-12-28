@@ -1,8 +1,10 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom';
+import { Dropdown, Collapse, initMDB } from "mdb-ui-kit";
 
 const Project = (props) => {
     const navigate = useNavigate();
+    initMDB({ Dropdown, Collapse });
 
     const handleClick = (e) => {
         e.preventDefault();
@@ -34,7 +36,7 @@ const Project = (props) => {
                 </div>
                 <div class="project-box-content-header">
                     <p class="box-content-header">{props?.item?.projectName ? props?.item?.projectName : "Web design Application"}</p>
-                    <p class="box-content-subheader">Prototyping</p>
+                    {/* <p class="box-content-subheader">Prototyping</p> */}
                 </div>
                 <div class="box-progress-wrapper">
                     <p class="box-progress-header">Progress</p>

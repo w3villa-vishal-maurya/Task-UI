@@ -286,9 +286,53 @@ body {
     margin-bottom: 0;
 }
 
-.auth_user{
+.auth_user {
     background-color: rgb(222, 247, 185) !important;
 }
+
+.modal-wrapper {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    background-color: rgb(158, 155, 155);
+    opacity: 0.6;
+}
+
+.modal-container {
+    position: fixed;
+    top: 35%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 30rem;
+    padding: 2rem 3rem;
+    border-radius: 0.5rem;
+    background-color: #fff;
+}
+
+
+.user-list {
+    width: 325px;
+    height: 300px;
+    padding: 10px 20px 10px 35px;
+    margin-bottom: 16px;
+    background: var(--grey);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    overflow-y: scroll;
+}
+
+.user-list li {
+    width: 100%;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
 
 /* MAIN */
 /* CONTENT */

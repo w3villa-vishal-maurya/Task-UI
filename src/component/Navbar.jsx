@@ -21,10 +21,10 @@ const Navbar = () => {
         //     "email",
         //     JSON.stringify({ "email": null, password: null, "accessToken": null })
         // );
-
         cookies.remove("email");
-
+        console.log("Log out");
         alert("You have been logged out!!!");
+
         setIsLogin(false);
         window.location.reload(false);
     }

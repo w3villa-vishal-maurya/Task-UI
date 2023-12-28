@@ -12,6 +12,7 @@ import UserProfile from './UserProfile';
 import UpdateTask from "./UpdateTask";
 import ErrorPage from "./ErrorPage";
 import ProjectDashboard from "./ProjectDashboard";
+import CreateProject from "./CreateProject";
 
 
 
@@ -20,18 +21,15 @@ import ProjectDashboard from "./ProjectDashboard";
 const TaskFrame = () => {
     const navigate = useNavigate();
 
-    useEffect(() => {
+    useEffect(() => {   
         initMDB({ Dropdown, Collapse });
     }, [])
-
-    const [isShowMeeting, setIsShowMeeting] = useState(false);
 
     return (
         <>
             <div className='task-manager'>
                 <div className="left-bar">
                     <div className="left-content">
-
                         <ul className="action-list">
                             <li className="item item-p">
                                 <img className="feather feather-star" src="svg/star.svg" alt="" />
@@ -77,6 +75,7 @@ const TaskFrame = () => {
                             <Route path="/user-profile" element={<UserProfile />} />
                             <Route path="/update-task/:token" element={<UpdateTask />} />
                             <Route path="/projects" element={<Meeting />} />
+                            <Route path="/projects/create" element={<CreateProject />} />
                             <Route path="/projects/:id" element={<ProjectDashboard />} />
                             <Route path="/*" element={<ErrorPage />} />
                         </Route>
