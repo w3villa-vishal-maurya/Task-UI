@@ -11,6 +11,7 @@ import ResetPassword from './component/ResetPassword'
 
 
 
+
 const App = () => {
 
   return (
@@ -21,6 +22,7 @@ const App = () => {
         {/* {Public Routes} */}
         <Route path="/register" element={<Registration />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/admin/login" element={<Login />} />
         <Route path="/forget-password" element={<ForgetPassword />} />
         <Route path="/reset-password/*" element={<ResetPassword />} />
 

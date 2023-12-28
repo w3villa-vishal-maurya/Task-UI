@@ -38,7 +38,7 @@ const Meeting = () => {
                 });
 
                 // Set the response data in state
-                console.log(response.data.Projects);
+                // console.log(response.data.Projects);
                 if (response?.data?.Projects) {
                     setProjects(response.data.Projects);
                 }
@@ -75,7 +75,17 @@ const Meeting = () => {
             <div class="projects-section">
                 <div class="projects-section-header">
                     <p>Projects</p>
-                    <p class="time">December, 12</p>
+                    <p class="time">
+                        {
+                            auth?.role === "admin" ?
+                                <a href="/projects/create" class="item item-p">
+                                    {/* <img className="feather feather-star" src="svg/star.svg" alt="" /> */}
+                                    <span>Create New </span>
+                                </a>
+                                :
+                                ""
+                        }
+                    </p>
                 </div>
                 <div class="projects-section-line">
                     <div class="projects-status">

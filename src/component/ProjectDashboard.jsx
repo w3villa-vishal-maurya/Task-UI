@@ -3,6 +3,9 @@ import AuthContext from '../context/AuthProvider';
 import axios from '../api/axios';
 import { useLocation } from 'react-router-dom';
 import "./style/projectDashboard.css";
+import ShowModal from './ShowModal';
+import ShowAddUserModel from './ShowAddUserModel';
+import { Dropdown, Collapse, initMDB } from "mdb-ui-kit";
 
 const ProjectDashboard = () => {
     const { auth } = useContext(AuthContext);
@@ -12,6 +15,12 @@ const ProjectDashboard = () => {
     const [projectTask, setProjectTask] = useState([]);
     let [projectUser, setProjectUser] = useState([]);
 
+    const [showModal, setShowModal] = useState(false);
+    const [showUserModal, setShowUserModal] = useState(false);
+
+    const closeModal = () => setShowModal(false);
+    const closeUserModel = () => setShowUserModal(false);
+
     const location = useLocation();
     // const navigate = useNavigate();
 
@@ -20,9 +29,10 @@ const ProjectDashboard = () => {
     const projectId = path[2];
 
     useEffect(() => {
+        initMDB({ Dropdown, Collapse });
+
         async function getProjectWithId() {
             try {
-                console.log({ "hello me": auth });
                 const PROJECT_WITH_ID = `/project/${projectId}`;
 
                 const response = await axios.get(PROJECT_WITH_ID,
@@ -95,27 +105,29 @@ const ProjectDashboard = () => {
                 <li>
                     <i class='bx bxs-group'></i>
                     <span class="text">
-                        <h3>{project?.users?.length}</h3>
+                        <h3>{projectUser?.length}</h3>
                         <p>Users</p>
                     </span>
                 </li>
-                <li>
+                {/* <li>
                     <i class='bx bxs-dollar-circle'></i>
                     <span class="text">
                         <h3>$2543</h3>
                         <p>Total Sales</p>
                     </span>
-                </li>
+                </li> */}
             </ul>
 
 
             <div class="table-data">
                 <div class="order">
                     <div class="head">
-                        <h3>Recent Tasks</h3>
-                        <i class='bx bx-search'></i>
-                        <i class='bx bx-filter'></i>
+                        <h3>Tasks</h3>
+                        {auth?.role === "admin" && <i class='bx bx-plus' onClick={() => setShowModal(true)}></i>}
+                        {/* <i class='bx bx-filter'></i> */}
                     </div>
+                    {showModal && <ShowModal closeModal={closeModal} />}
+                    {showUserModal && <ShowAddUserModel closeUserModel={closeUserModel} />}
                     <table>
                         <thead>
                             <tr>
@@ -127,10 +139,10 @@ const ProjectDashboard = () => {
                         <tbody>
                             {projectTask.length > 0 ?
                                 projectTask.map((item) => (
-                                    <tr id={item?._id}>
+                                    <tr key={item?._id}>
                                         <td>
                                             {/* <img src="img/people.png" /> */}
-                                            <p>{item?.description}</p>
+                                            <p>{item?.taskName}</p>
                                         </td>
                                         <td>{new Date(item?.createdAt).toLocaleDateString()}</td>
                                         <td><span class={item?.completed ? "status completed" : "status pending"}>{item?.completed ? "completed" : "pending"}</span></td>
@@ -154,17 +166,15 @@ const ProjectDashboard = () => {
                 <div class="todo">
                     <div class="head">
                         <h3>User</h3>
-                        <i class='bx bx-plus'></i>
-                        <i class='bx bx-filter'></i>
+                        {auth?.role === "admin" && <i class='bx bx-plus' onClick={() => setShowUserModal(true)}></i>}
                     </div>
                     <ul class="todo-list">
-                        {console.log(projectUser)}
 
                         {projectUser.length ?
                             projectUser
                                 .filter((user) => user?._id === auth?.user_id)
                                 .map((user) => (
-                                    <li class="completed auth_user" id={user?._id}>
+                                    <li class="completed auth_user" key={user?._id}>
                                         <p>{user?.name}</p>
                                         <i class='bx bx-dots-vertical-rounded'></i>
                                     </li>
