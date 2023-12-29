@@ -5,7 +5,7 @@ import AuthContext from '../context/AuthProvider';
 import { useLocation } from 'react-router-dom';
 
 const SHOW_ALL_USER = "/project/show-users";
-const ADD_PROJECT_TO_USER = "/project//add-user-to-project";
+const ADD_PROJECT_TO_USER = "/project/add-user-to-project";
 
 
 const ShowAddUserModel = ({ closeUserModel }) => {
