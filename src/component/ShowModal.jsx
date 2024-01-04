@@ -45,9 +45,8 @@ const ShowModal = ({ closeModal }) => {
             );
 
             alert(response.data.message);
-
-            closeModal();
             setErrMsg("");
+            closeModal();
         } catch (err) {
             if (!err?.response) {
                 setErrMsg('No server response');

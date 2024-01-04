@@ -103,6 +103,7 @@ const ShowAddUserModel = ({ closeUserModel }) => {
 
             console.log(response.data?.message);
             alert(response.data?.message);
+            setErrMsg("");
             closeUserModel();
         }
         catch (err) {

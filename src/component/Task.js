@@ -25,6 +25,7 @@ const Task = () => {
                     });
 
                     // Set the response data in state
+                    console.log(response?.data);    
                     if (response?.data?.Task) {
                         setAllTaskData(response?.data?.Task);
                     }

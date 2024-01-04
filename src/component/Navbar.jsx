@@ -21,9 +21,13 @@ const Navbar = () => {
         //     "email",
         //     JSON.stringify({ "email": null, password: null, "accessToken": null })
         // );
-        cookies.remove("email");
-        console.log("Log out");
-        alert("You have been logged out!!!");
+        function delete_cookie(name) {
+            document.cookie = name +'=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+          }
+          delete_cookie("email");
+        // console.log("Log out");
+        // // alert("You have been logged out!!!");
+        navigate('/login')
 
         setIsLogin(false);
         window.location.reload(false);

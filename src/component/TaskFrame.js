@@ -32,7 +32,7 @@ const TaskFrame = () => {
                     <div className="left-content">
                         <ul className="action-list">
                             <li className="item item-p">
-                                <img className="feather feather-star" src="svg/star.svg" alt="" />
+                                <img className="feather feather-star" src="../svg/star.svg" alt="" />
                                 <span onClick={() => navigate("/create-task")}>Create</span>
                             </li>
                             <li className="item item-p">
@@ -40,11 +40,11 @@ const TaskFrame = () => {
                                 <span onClick={() => navigate("/all-task")}>Inbox</span>
                             </li>
                             <li className="item item-p">
-                                <img className="feather feather-calendar" src="svg/calender.svg" alt="" />
+                                <img className="feather feather-calendar" src="../svg/calender.svg" alt="" />
                                 <span onClick={() => navigate("/upcoming-task")}>Upcoming</span>
                             </li>
                             <li className="item item-p">
-                                <img className="feather feather-users" src="svg/users.svg" alt="" />
+                                <img className="feather feather-users" src="../svg/users.svg" alt="" />
                                 <span onClick={() => navigate("/projects")}>Projects</span>
                             </li>
 
