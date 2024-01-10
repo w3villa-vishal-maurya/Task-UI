@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState, useContext } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import { Dropdown, Collapse, initMDB } from "mdb-ui-kit";
 import axios from '../api/axios';
 import AuthContext from '../context/AuthProvider';
@@ -9,14 +9,13 @@ const ADD_PROJECT_TO_USER = "/project/add-user-to-project";
 
 
 const ShowAddUserModel = ({ closeUserModel }) => {
-    const checkRef = useRef();
     const { auth } = useContext(AuthContext);
     const [errMsg, setErrMsg] = useState('');
     const [projectUsers, setProjectUsers] = useState([]);
     const [checkedState, setCheckedState] = useState([]);
 
     window.onclick = function (event) {
-        if (event.target.id == "modal-2") {
+        if (event.target.id === "modal-2") {
             closeUserModel();
         }
     }

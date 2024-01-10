@@ -65,11 +65,13 @@ function Login() {
             // cookies.set("email", JSON.stringify({ "email": formData.email, password: formData.password, "accessToken": accessToken, user_id: decode?._id, role: decode.role}),
             //     { expires: new Date(decode.exp * 1000) },
             // )
+            let expires =  "expires=" + new Date(decode.exp * 1000).toUTCString();
+            console.log(expires);
 
-            document.cookie = "email" + "=" + JSON.stringify({ "email": formData.email, password: formData.password, "accessToken": accessToken, user_id: decode?._id, role: decode.role}) + "; expires=" + new Date(decode.exp * 1000);
+            document.cookie = "email" + "=" + JSON.stringify({ "email": formData.email, password: formData.password, "accessToken": accessToken, user_id: decode?._id, role: decode.role}) + "; " + expires;
 
             // navigate(from, { replace: true });
-            navigate('/all-task')
+            navigate('/all-task');
         } catch (err) {
             if (!err?.response) {
                 // setErrMsg('No server response');

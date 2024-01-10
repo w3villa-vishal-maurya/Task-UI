@@ -1,5 +1,5 @@
 import { Dropdown, Collapse, initMDB } from "mdb-ui-kit";
-import React, { useState, useEffect } from 'react';
+import React, {useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import "./style/task.css"
 import Task from './Task'
