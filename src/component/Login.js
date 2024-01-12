@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import useAuth from './hooks/useAuth';
 import axios from "../api/axios"
-import { useNavigate} from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Cookies from 'universal-cookie';
 import { jwtDecode } from "jwt-decode";
 
@@ -9,7 +9,7 @@ const LOGIN_URL = "/login"
 
 function Login() {
     const emailRef = useRef();
-    const { setAuth, setIsLogin } = useAuth();
+    const { setAuth, isLogin, setIsLogin } = useAuth();
 
     const cookies = new Cookies();
 
@@ -23,8 +23,14 @@ function Login() {
     // const from = location.state?.from?.pathname || "/";
 
     useEffect(() => {
-        emailRef.current.focus();
+        if (isLogin) {
+            navigate('/all-task')
+        }
+        else {
+            emailRef.current.focus();
+        }
     }, [])
+
 
 
     // Handle form input changes
@@ -60,16 +66,11 @@ function Login() {
             // );
 
             const decode = jwtDecode(accessToken);
-           
 
-            // cookies.set("email", JSON.stringify({ "email": formData.email, password: formData.password, "accessToken": accessToken, user_id: decode?._id, role: decode.role}),
-            //     { expires: new Date(decode.exp * 1000) },
-            // )
-            let expires =  "expires=" + new Date(decode.exp * 1000).toUTCString();
-            console.log(expires);
 
-            document.cookie = "email" + "=" + JSON.stringify({ "email": formData.email, password: formData.password, "accessToken": accessToken, user_id: decode?._id, role: decode.role}) + "; " + expires;
-
+            cookies.set("email", JSON.stringify({ "email": formData.email, password: formData.password, "accessToken": accessToken, user_id: decode?._id, role: decode.role }),
+                { expires: new Date(decode.exp * 1000) },
+            )
             // navigate(from, { replace: true });
             navigate('/all-task');
         } catch (err) {

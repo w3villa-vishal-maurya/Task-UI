@@ -1,14 +1,24 @@
 import React, { useEffect, useRef, useState } from 'react'
+import useAuth from './hooks/useAuth';
 import axios from '../api/axios';
+import { useNavigate } from 'react-router-dom';
 
 const FORGET_PASSWORD = "/forget-password"
 
 const ForgetPassword = () => {
     const emailRef = useRef();
+    const { isLogin } = useAuth();
 
-    useEffect(()=>{
-        emailRef.current.focus();
-    },[])
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (isLogin) {
+            navigate('/all-task')
+        }
+        else {
+            emailRef.current.focus();
+        }
+    }, [])
 
     const [email, setEmail] = useState('');
     const [errMsg, setErrMsg] = useState('');
@@ -17,8 +27,6 @@ const ForgetPassword = () => {
         e.preventDefault();
         try {
             const response = await axios.post(FORGET_PASSWORD, { "email": email });
-
-            console.log(response.data?.message);
             alert(response.data?.message);
             setErrMsg(response.data);
         } catch (err) {

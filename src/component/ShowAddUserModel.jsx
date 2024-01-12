@@ -154,7 +154,7 @@ const ShowAddUserModel = ({ closeUserModel }) => {
                     </ul>
                 </div>
 
-                <button onClick={handleAddUserSubmit}>Add User</button>
+                <button className='btn btn-primary btn-lg btn-block' onClick={handleAddUserSubmit}>Add User</button>
             </div>
         </>
     )
