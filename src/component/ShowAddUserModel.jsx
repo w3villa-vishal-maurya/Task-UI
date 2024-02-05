@@ -3,6 +3,8 @@ import { Dropdown, Collapse, initMDB } from "mdb-ui-kit";
 import axios from '../api/axios';
 import AuthContext from '../context/AuthProvider';
 import { useLocation } from 'react-router-dom';
+import useLoading from "./hooks/useLoading";
+import ReactLoading from "react-loading";
 
 const SHOW_ALL_USER = "/project/show-users";
 const ADD_PROJECT_TO_USER = "/project/add-user-to-project";
@@ -13,6 +15,7 @@ const ShowAddUserModel = ({ closeUserModel }) => {
     const [errMsg, setErrMsg] = useState('');
     const [projectUsers, setProjectUsers] = useState([]);
     const [checkedState, setCheckedState] = useState([]);
+    const { loading, startLoading, stopLoading } = useLoading(false);
 
     window.onclick = function (event) {
         if (event.target.id === "modal-2") {
@@ -30,6 +33,7 @@ const ShowAddUserModel = ({ closeUserModel }) => {
         initMDB({ Dropdown, Collapse });
         async function showAllUser() {
             try {
+                startLoading();
                 const response = await axios.post(SHOW_ALL_USER,
                     {
                         projectId
@@ -42,6 +46,7 @@ const ShowAddUserModel = ({ closeUserModel }) => {
                 // console.log(response.data.Users);
                 setProjectUsers(response.data?.Users);
                 setErrMsg("");
+                stopLoading();
             } catch (err) {
                 if (!err?.response) {
                     setErrMsg('No server response');
@@ -125,6 +130,7 @@ const ShowAddUserModel = ({ closeUserModel }) => {
         <>
             <div className='modal-wrapper' id="modal-2"></div>
             <div className='modal-container'>
+                
                 <div class="todo">
                     <div class="head">
                         <h3>Available User</h3>
