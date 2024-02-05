@@ -79,10 +79,30 @@ const Navbar = () => {
                         </div>
                         :
 
-                        <div className="d-flex align-items-center">
+                        <div className="d-flex align-items-center space">
                             {/* <a className="link-secondary me-3" href="#">
                                 <i className="fas fa-shopping-cart"></i>
                             </a> */}
+                            <form class=" form-inline my-2 my-lg-0 ">
+                                <input
+                                    data-mdb-dropdown-init
+                                    class="form-control"
+                                    type="search"
+                                    placeholder="Search"
+                                    aria-label="Search"
+                                />
+                                <ul
+                                    className="dropdown-menu dropdown-menu-end set-size"
+                                    aria-labelledby=""
+                                >
+                                    <li>
+                                        <div className="dropdown-item">Vishal</div>
+                                    </li>
+                                    <li>
+                                        <div className="dropdown-item">Ravi</div>
+                                    </li>
+                                </ul>
+                            </form>
 
                             <div className="dropdown">
                                 <div

@@ -60,6 +60,14 @@
     align-items: center;
 }
 
+.space{
+    gap: 10px !important;
+}
+
+.set-size{
+    width: 270px;
+    border-radius: 0px !important;
+}
 
 .mode-switch.active .moon {
     fill: var(--main-color) !important;
