@@ -10,7 +10,7 @@ const CREATE_TASK = "/task/createnew"
 const CreateTask = () => {
     const errRef = useRef();
 
-    const { auth, setCurrentComponent} = useContext(AuthContext);
+    const { auth, setCurrentComponent } = useContext(AuthContext);
     const descriptionRef = useRef();
 
     const [description, setDescription] = useState('');
