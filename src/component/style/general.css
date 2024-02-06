@@ -73,6 +73,22 @@
     fill: var(--main-color) !important;
 }
 
+/* Add this CSS to hide overflow and enable scrolling */
+.dropdown-menu {
+    max-height: 150px; /* Set your desired maximum height */
+    overflow-y: auto;
+  }
+  
+  /* Optional: Add some padding or styling for better appearance */
+  .dropdown-item {
+    padding: 8px 16px;
+  }
+  
+  /* Add hover effect if desired */
+  .dropdown-item:hover {
+    background-color: #868686;
+  }
+
 @media screen and (max-width: 720px) {
 
     .add-btn,
